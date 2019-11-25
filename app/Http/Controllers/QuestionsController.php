@@ -54,12 +54,14 @@ class QuestionsController extends Controller
         if(!auth()->check()){
             return redirect('/login');
         }
+        // return redirect(route('questions.index'))->with('flash_message',auth()->user());
+        array_values($request->all());
         $question = auth()->user()->questions()->create($request->all());
         
         
 
         return redirect(route('questions.index'))->with('flash_message','작성한 글이 저장되었습니다.');
-        // var_dump($question);
+        
     }
 
     /**
@@ -72,9 +74,10 @@ class QuestionsController extends Controller
     {
         //
         $question = \App\Question::findOrFail($id); # 있으면 찾고, 없으면 fail
+        $user_name = \App\Question::find(1)->user()->find(1)->user_id;
         $answers = \App\Question::findOrFail($id)->answers()->get();
 
-        return view('question.show',compact(['question','answers']));   
+        return view('question.show',compact(['question','answers','user_name']));   
     }
 
     /**

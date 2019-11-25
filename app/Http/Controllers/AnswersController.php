@@ -12,6 +12,7 @@ class AnswersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         //
@@ -20,8 +21,13 @@ class AnswersController extends Controller
         // return $answers;
         // print("as");
         $answers = \App\Question::find($request->question_id)->answers()->get();
+        
+        # user 에서 user_id 를 받기에는 laravel 에서 기본키, 오토 인크리먼트 만을  외래키로 사용 가능. ajax 로 데이터를 주기 때문에 프론트 웨어에서 name 값을 뿌리는 것은 무리
+        // $data = array_map('add_name',$answers);
 
-        return $answers;
+        $data = return_user_name($answers);
+
+        return $data;
     }
     /**
      * Show the form for creating a new resource.
@@ -43,7 +49,7 @@ class AnswersController extends Controller
     public function store(AnswersRequest $request)
     {
         //
-        // return print("ddd");
+
         // dump(session()->all()); # 세션에있는 데이터  복사본 ( 덤프 데이터 보기.- 디버그 코드 )
     
         if (!auth()->check()){
@@ -53,7 +59,9 @@ class AnswersController extends Controller
         $answer = auth()->user()->answers()->create($request->all());
         $answers = \App\Question::find($request->question_id)->answers()->get();
 
-        return $answers;
+        $data = return_user_name($answers);
+
+        return $data;
     }
 
     /**
@@ -87,15 +95,14 @@ class AnswersController extends Controller
      */
     public function update(AnswersRequest $request, $id)
     {
-        //
+
+
         $answerUpdata = \App\Answer::find($id)->update(['content'=>$request->content]);
-        // if (! $answerUpdata){
-        //     return response()->json([]);
-        // }
         $answers = \App\Question::find($request->question_id)->answers()->get();
 
-        return $answers;
-        // print()
+        $data = return_user_name($answers);
+        return $data;
+
     }
 
     /**
@@ -106,12 +113,12 @@ class AnswersController extends Controller
      */
     public function destroy(Request $request,$id)
     {
-        //
+
         \App\Answer::find($id)->delete();
         $answers = \App\Question::find($request->question_id)->answers()->get();
 
-        // return response()->json(['data'=>$answers]);
-        return $answers;
+        $data = return_user_name($answers);
+        return $data;
         
         
 

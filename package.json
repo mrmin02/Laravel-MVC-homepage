@@ -22,5 +22,9 @@
         "sass-loader": "7.*",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "startbootstrap-modern-business": "^4.2.1",
+        "startbootstrap-the-big-picture": "^4.2.1"
     }
 }

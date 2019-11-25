@@ -11,9 +11,9 @@ class Answer extends Model
         'id','user_id','question_id','content'
     ];
     public function questions(){
-        return $this->belongsToMany(Question::class);
+        return $this->belongsTo(Question::class);
     }
-    public function users(){
-        return $this->belongsToMany(User::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

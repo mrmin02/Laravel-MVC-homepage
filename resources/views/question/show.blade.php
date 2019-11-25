@@ -34,23 +34,28 @@
                 <button type="submit" class="btn btn-primary">수정</button>
             </div>
         </form>
+
+
         <form action="{{route('questions.destroy',[$question->id])}}" method="post">
             {{ method_field('DELETE') }}
             {{ csrf_field() }}
+            
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">삭제</button>
             </div>
         </form>
+
+
+
     @endif
     <div class="form-group">
-        <label for="answer">댓글</label>
+        <label for="answer">답변</label>
         @auth
-            <form id="answerSubmit">
-                <!-- {{ method_field('POST') }}
-                    {{ csrf_field() }}   -->
+            <form id="answerSubmit"> 
+            <!-- id 에 이벤트 작성. (ajax 이용) -->
                 <textarea name="content" id="answer" rows="10" class="form-control" required></textarea>
                 <br>
-                <button class="btn btn-primary" id="answer" type="submit">댓글 작성하기</button>
+                <button class="btn btn-primary" id="answer" type="submit">답변 작성하기</button>
             </form>
         @endauth
     </div>
@@ -59,29 +64,23 @@
 @stop
 @section('script')
 
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
 
 <script type="text/javascript">
-    function modefiClick(id, content){
-        console.log("수정클릭");
+    function modefiClick(id, content){ // 수정 클릭
+        
         $('#userAnswer'+id).empty();
         $('#userAnswer'+id).append("<textarea id='newContent'>"+content+"</textarea>");
         $("#modefiAnswer"+id).empty();
-        console.log("수정 ");
+        
         $("#modefiAnswer"+id).append("<div class='form-group'>" +
             "<button type='button' class='btn btn-primary' onclick='modefiSubmit("+id+")'>수정 완료</button>" +
             "</div>");
     }
-    function modefiSubmit(id){
-        console.log("수정 완료 클릭");
-        
+    function modefiSubmit(id){  // 수정 사항 저장 
         var content = $('#newContent').val();
         var question_id = {{$question -> id}};
-        console.log("content :",content);
         $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -94,28 +93,29 @@
                 dataType: 'json',
                 success: function(data) {
                     drawAnswer(data);
-                    console.log("업데이트 성공");
-                    console.log(data);
-                    // alert("댓글 로딩 성공");
                 },
                 error: function(data) { 
                     // flash 메시지를 사용하고 싶어도, controller 에서 제약에 걸리면 오류로 반환하기 때문에 비동기적으로 해야만 함. 
                     // 따라서 ajax 에서는 사실상 사용 하기 어려움
                     var errors = data.responseJSON;
-                    console.log(errors);
-                    alert(errors.errors.content[0]);
+                    if(errors){ // 글자수, required  만족 못했을 경우.
+                        alert(errors.errors.content[0]);
+                    }else{ // 로그인 안한 경우
+                        alert("답변 수정 실패");
+                    }
                 }
             });
     }
-    function drawAnswer(datas) {
+    function drawAnswer(datas) { // 데이터로 화면에 나타냄.
             $("#answersList").empty();
-            datas.map((data) => {
+            datas.map((data) => {  // {id: , user_id: , content: , created_at: , .. }
                 var csrfVar = "{{ csrf_token() }}";
                 var id = <?php if (Auth::check()){
                 print(Auth::user()->id);
                 print(';');
             }else{print("'not login';");}
                 ?>
+                
                 var addButton = '';
                 if ( id == data.user_id){
                     addButton = 
@@ -130,47 +130,39 @@
                     "</div>" +
                     "</form>" ;
                 }
-                $("#answersList").append("<div id='answer'" + data.id + "><h5>" + data.user_id + 
+                $("#answersList").append("<div id='answer'" + data.id + "><h5>" + data.u_name + 
                     "</h5><p id='userAnswer"+data.id+"'>" 
                     + data.content +"</p>"+
                     addButton+
                     "</div>");
                 $("#deleteAnswer" + data.id).submit(function(e) {
-                    console.log("#deleteAnswer" + data.id);
                     var question_id = {{$question -> id}}      
                     e.preventDefault();
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        // asnc: true,
                         type: 'DELETE',
                         url: "/answers/"+data.id,
                         data: {question_id:question_id},
                         dataType: 'json',
                         success: function(data) {
-                            alert("댓글 삭제 성공했습니다 !!");
-                            console.log(data);
+                            alert("답변 삭제 성공했습니다 !!");
                             drawAnswer(data)
                             
                         },
                         error: function(data) {
-                            console.log("data");
-                            alert("댓글 삭제 오류 발생" + data);
+                            alert("답변 삭제 오류 발생" + data);
                         }
                     });
-                    // .fail(function (jqXHR, textStatus, errorThrown) {
-
-                    // console.log('2. fail 을 탄다 : ' + errorThrown);
-
                 });
             });
 
         };
-    $(document).ready(function() {
+    $(document).ready(function() { // 페이지 로딩 된 후 이벤트 등록, 답변 받아오기 (ajax)
         ajaxShow();
         
-        $("#answerSubmit").submit(function(e) {  // and delete ajax  # 댓글 등록
+        $("#answerSubmit").submit(function(e) {  // and delete ajax  # 답변 등록
             e.preventDefault();
             var content = $("textarea[name=content]").val();
             var user_id = <?php if (Auth::check()){
@@ -194,26 +186,23 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    alert("댓글 등록에 성공했습니다 !!");
+                    alert("답변 등록에 성공했습니다 !!");
                     $("textarea[name=content]").val('');
                     drawAnswer(data)
-                    console.log(data);
                 },
                 error: function(data) {
-                    // flash 메시지를 사용하고 싶어도, controller 에서 제약에 걸리면 오류로 반환하기 때문에 비동기적으로 해야만 함. 
-                    // 따라서 ajax 에서는 사실상 사용 하기 어려움
                     var errors = data.responseJSON;
                     if(errors){ // 글자수, required  만족 못했을 경우.
                         alert(errors.errors.content[0]);
                     }else{ // 로그인 안한 경우
-                        alert("로그인이 필요합니다.");
+                        alert("답변 등록 실패");
                     }
                     
                 }
             });
         });
 
-        function ajaxShow() { // 처음에 댓글 로딩
+        function ajaxShow() { // 처음에 답변 로딩
             var question_id = {{$question -> id}}                    
 
             $.ajax({
@@ -227,22 +216,15 @@
                 dataType: 'json',
                 success: function(data) {
                     drawAnswer(data);
-                    console.log("댓글 로딩 성공");
-                    // alert("댓글 로딩 성공");
                 },
                 error: function(data) {
-                    console.log(data);
-                    alert("댓글 로딩 오류 발생" + data);
-                    // console.log(data);
+                    alert("답변 로딩 오류 발생" + data);
+
                 }
             });
 
         }
     });
-
-   
-
-
 
 </script>
 @stop

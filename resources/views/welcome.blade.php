@@ -96,5 +96,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="Login">
+            <div class="top-right links">
+            @if(auth()->guest()) 
+              <a href="{{ route('login.index') }}">로그인</a>
+              </form>
+            @else
+                <form action="{{ route('logout')}}" method="POST">
+                  {{ csrf_field() }}
+                  {{ method_field('DELETE') }}
+            
+                  <p>{{auth()->user()->user_id}} 님 환영합니다</p>
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary">삭제</button>
+                  </div>
+                </form>
+
+            @endif
+            </div>
+      </div>
     </body>
 </html>

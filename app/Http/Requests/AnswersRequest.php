@@ -24,7 +24,7 @@ class AnswersRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' =>['required','min:3'],
+            'content' =>['required','min:1'],
         ];
     }
     public function messages()
@@ -37,7 +37,7 @@ class AnswersRequest extends FormRequest
     public function attributes()
     {
         return[
-            'content'=> '질문',
+            'content'=> '답변',
         ];
     }
 }
