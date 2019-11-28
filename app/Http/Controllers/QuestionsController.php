@@ -14,10 +14,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //
-        // paginate ( 몇개씩 )
-        // $questions = \App\Question::with('user')->latest()->paginate(5);
-        $questions = \App\Question::with('user')->latest()->paginate(5);
+        
+        $questions = \App\Question::with('user')->latest()->paginate(5); # 끝에서 5개씩
         return view('question.index',compact('questions'));
     }
 
@@ -30,7 +28,6 @@ class QuestionsController extends Controller
     {
         //
         // 로그인 하지 않았을 경우 글을 추가 못하게 하기.
-        // dump(session()->all()); # 세션에있는 데이터  복사본 ( 덤프 데이터 만들기. )
         
         if(!auth()->check()){
             return redirect('/login');
@@ -46,16 +43,14 @@ class QuestionsController extends Controller
      * 
      */
     public function store(QuestionsRequest $request)
-    {
+    { # QuestionsRequest  유효성 검사
         //
-        // 로그인 정보로
-        // dump(session()->all()); # 세션에있는 데이터  복사본 ( 덤프 데이터 보기 -- 디버그 코드. )
-        
+       
+       # 로그인 확인 
         if(!auth()->check()){
             return redirect('/login');
         }
-        // return redirect(route('questions.index'))->with('flash_message',auth()->user());
-        array_values($request->all());
+        
         $question = auth()->user()->questions()->create($request->all());
         
         
@@ -74,10 +69,10 @@ class QuestionsController extends Controller
     {
         //
         $question = \App\Question::findOrFail($id); # 있으면 찾고, 없으면 fail
-        $user_name = \App\Question::find(1)->user()->find(1)->user_id;
+        // $user_name = \App\Question::find(1)->user()->first()->user_id;
         $answers = \App\Question::findOrFail($id)->answers()->get();
 
-        return view('question.show',compact(['question','answers','user_name']));   
+        return view('question.show',compact(['question','answers']));   
     }
 
     /**

@@ -1,21 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.mainnav')
 
 @section('content')
+<!-- <img src="{{ asset('pic/winter_14-wallpaper-1920x1080.jpg') }}" width=100% height="500px" alt="Responsive image"> -->
 <div class="container">
-    <h1>포럼글 목록</h1>
-    <hr/>
-    <ul>
-    @forelse($questions as $question)
-        <li>
-            <a href="{{route('questions.show',[$question->id])}}">{{ $question->title }}</a>
-            <small>
-                by {{ $question->user->name}}
-            </small>
-        </li>
-    @empty
-        <p>글이 없습니다.</p>
-    @endforelse
-    </ul>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">글 제목</th>
+                                <th scope="col">작성자</th>
+                            </tr>
+                        </thead>
+                    @forelse($questions as $question)
+                        <tbody>
+                            <tr onclick="">
+                                <th scope="row">{{$question->id}}</th>
+                                <td><a href="{{route('questions.show',[$question->id])}}">{{ $question->title }}</a></td>
+                                <td>{{$question->user->name}}</td>
+                                <!-- <td>{{$question->user->user_id}}</td> -->
+                            </tr>
+                        </tbody>
+                    @empty
+                        <p>글이 없습니다.</p>
+                    @endforelse
+                    </table>
 </div>
 
 @if($questions->count())

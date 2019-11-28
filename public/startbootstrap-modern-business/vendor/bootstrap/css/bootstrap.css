@@ -6510,6 +6510,9 @@ a.close.disabled {
 .bg-primary {
   background-color: #007bff !important;
 }
+.bg-yellow1{
+  background-color: var(--yellow) !important;
+}
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
@@ -10034,5 +10037,8 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+
+
 }
+
 /*# sourceMappingURL=bootstrap.css.map */

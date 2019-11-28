@@ -1,9 +1,9 @@
-@extends('layouts.mainnav')
+@extends('layouts.app')
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container">
-    
+    <h1>글 제목: {{$question->title}}</h1>
     <hr />
     <!-- {{-- css 는 bootstrap 4.3.1 을 사용함. 9장에  
         php artisan ui:vue --auth, npm i , npm run dev 에 의해서. 라이브러리 설치가 되고, 
@@ -13,14 +13,11 @@
     {!! csrf_field() !!} {{-- @csrf   로 대체가능 (블레이드) --}}
     {{-- cross site request forge --}}
     {{-- route() : url 경로 , csrf_field(): csrf 대응하는 헬퍼함수 --}}
-    <div class="form-group">
-        <label for="">글 제목</label>
-        <p class="form-control">{{$question->title}}</p>
-    </div>
+
     <div class="form-group {{ $errors->has('title') ? 'has-error' :'' }}">
-        <label for="title">작성자</label>
-        <p type="text" name="title" id="title" value="" >
-            {{$question->user->user_id}}
+        <label for="title">제목</label>
+        <p type="text" name="title" id="title" value="{{ old('title') }}" class="form-control">
+            {{$question->title}}
         </p>
     </div>
     <div class="form-group {{ $errors->has('content') ? 'has-error':'' }}">
@@ -28,55 +25,44 @@
         <p name="content" id="content" rows="10" class="form-control" value="{{ old('content') }}">
             {{$question->content}}
         </p>
+        
     </div>
     
     @if(Auth::id() == $question->user_id)
-        <div class="buttonadjustment">
-            <form action="{{route('questions.edit',[$question->id])}}" method="get" style="display: inline;">
-                <div class="form-group" style="display: inline;">
-                    <button type="submit" class="btn btn-primary">수정</button>
-                </div>
-            </form>
-            <form action="{{route('questions.destroy',[$question->id])}}" method="post" style="display: inline;">
-                {{ method_field('DELETE') }}
-                {{ csrf_field() }}
-                <div class="form-group" style="display: inline;">
-                    <button type="submit" class="btn btn-primary">삭제</button>
-                </div>
-            </form>
-        </div>
+        <form action="{{route('questions.edit',[$question->id])}}" method="get">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">수정</button>
+            </div>
+        </form>
+
+
+        <form action="{{route('questions.destroy',[$question->id])}}" method="post">
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">삭제</button>
+            </div>
+        </form>
+
+
+
     @endif
     <div class="form-group">
-        <label for="answer">댓글</label><br>
+        <label for="answer">답변</label>
         @auth
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".answer-add-modal">댓글 달기</button>
-
-        <div class="modal fade answer-add-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <form id="answerSubmit">
-                    <!-- {{ method_field('POST') }}
-                        {{ csrf_field() }}   -->
-                    <textarea name="content" id="answer" rows="10" class="form-control" required></textarea>
-                    <br>
-                    <button class="btn btn-primary" id="answer" type="submit">댓글 작성하기</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </form>
-            </div>
-        </div>
-        </div>
+            <form id="answerSubmit"> 
+            <!-- id 에 이벤트 작성. (ajax 이용) -->
+                <textarea name="content" id="answer" rows="10" class="form-control" required></textarea>
+                <br>
+                <button class="btn btn-primary" id="answer" type="submit">답변 작성하기</button>
+            </form>
         @endauth
     </div>
     <div id="answersList"></div>
 </div>
 @stop
 @section('script')
-
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -102,6 +88,7 @@
                 asnc: true,
                 type: 'PUT',
                 url: "/answers/"+id,
+                
                 data: {content:content,question_id:question_id},
                 dataType: 'json',
                 success: function(data) {
@@ -120,10 +107,7 @@
             });
     }
     function drawAnswer(datas) { // 데이터로 화면에 나타냄.
-
             $("#answersList").empty();
-
-
             datas.map((data) => {  // {id: , user_id: , content: , created_at: , .. }
                 var csrfVar = "{{ csrf_token() }}";
                 var id = <?php if (Auth::check()){
@@ -135,13 +119,13 @@
                 var addButton = '';
                 if ( id == data.user_id){
                     addButton = 
-                    "<form id='modefiAnswer" + data.id +"'style='display: inline;'>" +
-                    "<div class='form-group' style='display: inline;'>" +
+                    "<form id='modefiAnswer" + data.id +"'>" +
+                    "<div class='form-group'>" +
                     "<button type='button' class='btn btn-primary' onclick='modefiClick("+data.id+",\""+data.content+"\")'>수정</button>" +
                     "</div>" +
-                    "</form>" +'  '+
-                    "<form id='deleteAnswer" + data.id + "'style='display: inline;'>" +
-                    "<div class='form-group'style='display: inline;'>" +
+                    "</form>" +
+                    "<form id='deleteAnswer" + data.id + "'>" +
+                    "<div class='form-group'>" +
                     "<button type='submit' class='btn btn-primary'>삭제</button>" +
                     "</div>" +
                     "</form>" ;

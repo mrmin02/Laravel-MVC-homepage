@@ -54,7 +54,7 @@ class LoginController extends Controller
         //     return back()->withInput();
         // }
         flash(auth()->user()->user_id.'님 환영합니다');
-        return redirect()->intended('/home');
+        return redirect()->intended('/');
         // return redirect('welcom');
     }
     /**

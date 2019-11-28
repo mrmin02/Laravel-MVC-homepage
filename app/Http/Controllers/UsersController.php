@@ -54,7 +54,8 @@ class UsersController extends Controller
         
         flash('가입 완료');
         
-        return view('auth.login');
+        // return view('auth.login');
+        return redirect('/login');
     }
     /**
      * Display the specified resource.

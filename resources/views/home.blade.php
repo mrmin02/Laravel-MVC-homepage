@@ -34,14 +34,14 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="about.html">조원 소개</a>
+            <a class="nav-link" href="/introduce">조원 소개</a>
 
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="services.html">현지 학기제</a>
+            <a class="nav-link" href="/intros">현지 학기제</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Q & A</a>
+            <a class="nav-link" href="/questions">Q & A</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,10 +69,11 @@
     
           <p>{{auth()->user()->user_id}} 님 환영합니다</p>
           <div class="form-group">
-              <button type="submit" class="btn btn-primary">삭제</button>
+              <button type="submit" class="btn btn-primary">로그아웃</button>
           </div>
         </form>
       @endif
+      
     </div>  
   </nav>
 

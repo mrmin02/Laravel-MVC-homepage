@@ -1,4 +1,4 @@
-@extends('layouts.mainnav')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -34,4 +34,4 @@
             </div>
         </form>
     </div>
-@endsection
+@stop
