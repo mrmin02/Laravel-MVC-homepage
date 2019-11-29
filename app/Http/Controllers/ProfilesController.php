@@ -36,21 +36,28 @@ class ProfilesController extends Controller
             # 나누기 연산으로 착각함.. 0 / a  로  인식해서 오류 발생. 따라서 /profile  /  따로 
         }
 
-        $user_info = \App\User::where('user_id',$id)->find(1);
+        $user_info = \App\User::where('user_id',$id)->first();
         $user_questions = \App\Question::where('user_id',auth()->user()->id)->latest()->paginate(5);
         $user_q_a_num = [];
         foreach($user_questions as $question){
             $user_q_a_num[$question->id] = $question->answers()->count();
-        }
+        }        
 
-        return view("profile.index",compact('user_info','user_questions','user_q_a_num'));
+        if($user_info->admin == 1){
+            $users = \App\User::get();
+            return view("profile.index",compact('user_info','user_questions','user_q_a_num','users'));
+        }else{
+            return view("profile.index",compact('user_info','user_questions','user_q_a_num'));
+        }
+        
+        
     }
 
     # 정보 변경 ( 비밀번호 미포함 )
     public function edit_info($id)
     {
         
-        $info = \App\User::where('user_id',$id)->find(1);
+        $info = \App\User::where('user_id',$id)->first();
         return view('profile.edit_info',compact('info'));
 
     }
@@ -102,8 +109,36 @@ class ProfilesController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($id) # 관리자가 유저 아이디 삭제
     {
-        //
+        if(auth()->user()->id == $id){
+            $message['message'] = "자신의 계정을 삭제할 수 없습니다.";
+            return $message;
+        }
+        if(auth()->user()->admin ==0 ){
+            return redirect('/');
+        }
+        \App\User::where('id',$id)->delete();
+        $users = \App\User::get();
+        return $users;
+    }
+    public function put_admin($id) # 관리자가 유저에게 관리자 권한 부여
+    {   
+        if(auth()->user()->id == $id){
+            $message['message'] = "자신의 권한은 관리할 수 없습니다.";
+            return $message;
+        }
+
+        if(auth()->user()->admin ==0 ){
+            return redirect('/');
+        }
+        if(\App\User::where('id',$id)->first()->admin){
+            \App\User::where('id',$id)->update(['admin'=>0]);
+        }else{            
+            \App\User::where('id',$id)->update(['admin'=>1]);
+        }
+        $users = \App\User::get();
+        return $users;
+        
     }
 }

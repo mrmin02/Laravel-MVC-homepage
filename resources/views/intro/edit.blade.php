@@ -39,9 +39,11 @@
     $('.modBtn').on('click',function(e){
         // Get form
         var form = $('#formData')[0];
+        
         var introId = $(this).attr('data-id');
         // Create an FormData object 
         var data = new FormData(form);
+
         data.append('_method', 'PATCH');
         e.preventDefault();
         $.ajax({

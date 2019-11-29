@@ -56,6 +56,12 @@ Route::resource('introduce', 'IntroduceContoller');
 Route::get('/profile',"ProfilesController@index");
 Route::get('/profile/{user_id}','ProfilesController@show');
 Route::get('/profile/{user_id}/edit_info','ProfilesController@edit_info');
+
 Route::put('/profile/{user_id}/update_info','ProfilesController@update_info');
+
 Route::get('/profile/{user_id}/edit_pwd','ProfilesController@edit_pwd');
+
 Route::put('/profile/{user_id}/update_pwd','ProfilesController@update_pwd');
+
+Route::delete('/profile/{id}','ProfilesController@destroy');
+Route::put('/profile/{id}/admin','ProfilesController@put_admin');

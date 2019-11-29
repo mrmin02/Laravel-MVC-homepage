@@ -35,19 +35,25 @@
     });
     $('.addBtn').on('click',function(e){
         // Get form
+
+
         var form = $('#formData')[0];
         
         // Create an FormData object 
         var data = new FormData(form);
+
+
         e.preventDefault();
         $.ajax({
             type: 'POST',
             enctype: 'multipart/form-data',
             url: '/intros',
             data: data,
+
             processData: false,
             contentType: false,
             cache: false,
+            
             success : function(data){
                 get_list();
                 $('.btmBlk').empty();

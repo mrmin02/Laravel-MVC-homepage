@@ -125,7 +125,7 @@
 
 
             datas.map((data) => {  // {id: , user_id: , content: , created_at: , .. }
-                var csrfVar = "{{ csrf_token() }}";
+                var csrfVar = "{{ csrf_token() }}"; // 없어도 될 듯.
                 var id = <?php if (Auth::check()){
                 print(Auth::user()->id);
                 print(';');
