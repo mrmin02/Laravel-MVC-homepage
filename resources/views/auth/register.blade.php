@@ -17,10 +17,43 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label for="birth"> {{ __('name')}} </label>	
+				<div class="register-birth">
+					<input id="name" type="text" name="name" required  value="{{ old('name') }}">
+                    @error('name')
+                        <span class="inavlid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>  
+                        </span>
+                    @enderror
+				</div>
+			</div>
+			<div class="form-group">
 				<label for="email"> {{ __('E-MAIL')}} </label>	
 				<div class="register-email">
 					<input id="email" type="email" name="email" required  value="{{ old('email') }}" autocomplete="email">
                     @error('email')
+                        <span class="inavlid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>  
+                        </span>
+                    @enderror
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="phone"> {{ __('Phone')}} </label>	
+				<div class="register-phone">
+					<input id="phone" type="tel" name="phone" required  value="{{ old('phone') }}" autocomplete="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="ex)010-1234-5678">
+                    @error('phone')
+                        <span class="inavlid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>  
+                        </span>
+                    @enderror
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="birth"> {{ __('birth')}} </label>	
+				<div class="register-birth">
+					<input id="birth" type="date" name="birth" required  value="{{ old('birth') }}" autocomplete="birth" min="1940-01-01">
+                    @error('birth')
                         <span class="inavlid-feedback" role="alert">
                             <strong>{{ $message }}</strong>  
                         </span>

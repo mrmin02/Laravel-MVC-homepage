@@ -35,9 +35,12 @@ class UsersController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|max:255|unique:users',
+            'name' => 'required|max:255',
             'email' => 'required|max:255',
+            'phone' =>'required|max:255',
+            'birth' =>'required|max:255',
             'password' => 'required|string|confirmed|min:6',
-            //'password-confirm' =>'required|string|min:6'
+            
         ]);
         
         $validator->validate();
@@ -47,6 +50,7 @@ class UsersController extends Controller
                 'status'=>'error',
             ], 200);
         }
+        
         $user=new User;
         $user->fill($request->all());
         $user->password = Hash::make($request->password);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class ProfilesController extends Controller
 {
@@ -35,7 +37,13 @@ class ProfilesController extends Controller
         }
 
         $user_info = \App\User::where('user_id',$id)->find(1);
-        return view("profile.index",compact('user_info'));
+        $user_questions = \App\Question::where('user_id',auth()->user()->id)->latest()->paginate(5);
+        $user_q_a_num = [];
+        foreach($user_questions as $question){
+            $user_q_a_num[$question->id] = $question->answers()->count();
+        }
+
+        return view("profile.index",compact('user_info','user_questions','user_q_a_num'));
     }
 
     # 정보 변경 ( 비밀번호 미포함 )
@@ -48,8 +56,30 @@ class ProfilesController extends Controller
     }
     public function update_info(Request $request, $id)
     {
-        //
-        // return view('profile.edit_info');
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|max:255',
+            'phone' =>'required|max:255',
+            'birth' =>'required|max:255',      
+        ]);
+        
+        $validator->validate();
+        
+        if($validator->fails()){
+            return response()->json([
+                'status'=>'error',
+            ], 200);
+        }
+
+        # $request->all() 써도 됨.
+        $user = \App\User::find(auth()->user()->id)->update([
+            'name' => $request->name,
+            'email'=> $request->email,
+            'phone'=> $request->phone,
+            'birth'=> $request->birth,
+        ]);
+        
+        return redirect('/profile');
 
     }
 
@@ -60,9 +90,15 @@ class ProfilesController extends Controller
     }
     public function update_pwd(Request $request, $id)
     {
-        //
-        // return view('profile.edit_info');
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|confirmed|min:6',
+        ]);
+        $password = Hash::make($request->password);
 
+        $user = \App\User::find(auth()->user()->id)->update([
+            'password' => $password,
+        ]);
+        return redirect('/profile'); 
     }
 
 

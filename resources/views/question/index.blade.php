@@ -9,6 +9,7 @@
                                 <th scope="col">No</th>
                                 <th scope="col">글 제목</th>
                                 <th scope="col">작성자</th>
+                                <th scope="col">댓글 개수</th>
                             </tr>
                         </thead>
                     @forelse($questions as $question)
@@ -17,6 +18,7 @@
                                 <th scope="row">{{$question->id}}</th>
                                 <td><a href="{{route('questions.show',[$question->id])}}">{{ $question->title }}</a></td>
                                 <td>{{$question->user->name}}</td>
+                                <td>{{$answers_num[$question->id]}}</td>
                                 <!-- <td>{{$question->user->user_id}}</td> -->
                             </tr>
                         </tbody>
@@ -24,15 +26,15 @@
                         <p>글이 없습니다.</p>
                     @endforelse
                     </table>
+    @if($questions->count())
+        <div class="text-center"> 
+        {{--css 가 bootstrap 에 설정되어 있고, 필요하면 가져다가 넣으면 됨.--}}
+        {{--https://getbootstrap.com/docs/4.3/getting-started/introduction/--}}
+        {{--public 의 app.js 를 사용하는 거임. --}}
+            {!! $questions->render() !!}
+            {{--XSS 방지 기능 무력화 , 보호기능 끄기: htmlspecialchars 이거 안하기==> render 로 테그를 만드는데 뭐 마음대로 바뀌니까.--}}
+        </div>
+    @endif
 </div>
 
-@if($questions->count())
-    <div class="text-center"> 
-    {{--css 가 bootstrap 에 설정되어 있고, 필요하면 가져다가 넣으면 됨.--}}
-    {{--https://getbootstrap.com/docs/4.3/getting-started/introduction/--}}
-    {{--public 의 app.js 를 사용하는 거임. --}}
-        {!! $questions->render() !!}
-        {{--XSS 방지 기능 무력화 , 보호기능 끄기: htmlspecialchars 이거 안하기==> render 로 테그를 만드는데 뭐 마음대로 바뀌니까.--}}
-    </div>
-@endif
 @stop

@@ -86,8 +86,8 @@
         
         $('#userAnswer'+id).empty();
         $('#userAnswer'+id).append("<textarea id='newContent'>"+content+"</textarea>");
+
         $("#modefiAnswer"+id).empty();
-        
         $("#modefiAnswer"+id).append("<div class='form-group'>" +
             "<button type='button' class='btn btn-primary' onclick='modefiSubmit("+id+")'>수정 완료</button>" +
             "</div>");

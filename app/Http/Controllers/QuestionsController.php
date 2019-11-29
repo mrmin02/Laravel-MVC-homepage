@@ -16,7 +16,12 @@ class QuestionsController extends Controller
     {
         
         $questions = \App\Question::with('user')->latest()->paginate(5); # 끝에서 5개씩
-        return view('question.index',compact('questions'));
+        $answers_num = [];
+        foreach($questions as $question){
+            $answers_num[$question->id] = $question->answers()->count();
+        }
+        // dd($answers_num);
+        return view('question.index',compact(['questions','answers_num']));
     }
 
     /**
