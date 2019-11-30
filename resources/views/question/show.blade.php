@@ -30,13 +30,15 @@
         </p>
     </div>
     
-    @if(Auth::id() == $question->user_id)
+    @if(Auth::id() == $question->user_id || isset(auth()->user()->admin) ?  (auth()->user()->admin==1)?1:0  : 0 )
         <div class="buttonadjustment">
+            @if(Auth::id() == $question->user_id)
             <form action="{{route('questions.edit',[$question->id])}}" method="get" style="display: inline;">
                 <div class="form-group" style="display: inline;">
                     <button type="submit" class="btn btn-primary">수정</button>
                 </div>
             </form>
+            @endif
             <form action="{{route('questions.destroy',[$question->id])}}" method="post" style="display: inline;">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
@@ -44,6 +46,7 @@
                     <button type="submit" class="btn btn-primary">삭제</button>
                 </div>
             </form>
+            
         </div>
     @endif
     <div class="form-group">
@@ -133,18 +136,24 @@
                 ?>
                 
                 var addButton = '';
-                if ( id == data.user_id){
+                if ( id == data.user_id || <?php if( isset(auth()->user()->admin) ){print(auth()->user()->admin?1:0);}else{print("false");} ?>){
+                    if( id == data.user_id) {
                     addButton = 
                     "<form id='modefiAnswer" + data.id +"'style='display: inline;'>" +
                     "<div class='form-group' style='display: inline;'>" +
                     "<button type='button' class='btn btn-primary' onclick='modefiClick("+data.id+",\""+data.content+"\")'>수정</button>" +
                     "</div>" +
-                    "</form>" +'  '+
+                    "</form>" +'  ';
+                    }
+
+                    addButton += 
                     "<form id='deleteAnswer" + data.id + "'style='display: inline;'>" +
                     "<div class='form-group'style='display: inline;'>" +
                     "<button type='submit' class='btn btn-primary'>삭제</button>" +
                     "</div>" +
                     "</form>" ;
+                    
+      
                 }
                 $("#answersList").append("<div id='answer'" + data.id + "><h5>" + data.u_name + 
                     "</h5><p id='userAnswer"+data.id+"'>" 
