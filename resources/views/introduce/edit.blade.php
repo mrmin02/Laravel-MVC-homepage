@@ -1,28 +1,46 @@
 <form id="formData" enctype="multipart/form-data" >
  {!! csrf_field() !!}
  <!-- {!! method_field('PUT')!!} -->
+    <div class="print-error-msg" style="display:none">
+        <ul></ul>
+    </div>
     <div class="form-group">
-         아이디 : <input type="text" name="user_id" id ="user_id" value="{{ old('user_id',$member->user_id)}}"></br>
-         자기소개 : <textarea cols='30' rows='5' name='intro'>{{ old('intro', $member->intro ) }}</textarea></br>
-         목표 : <input type="text" name="goal" id ="goal" value="{{ old('goal',$member->goal )}}"></br>
-         현재 사진 <img src="/images/{{ $member->photo }}" alt="photo x"></br>
-         바꿀 사진 : <input type="file" name="photo" id="photo" value="{{ old('photo',$member->photo )}}"></br>
+        <P>아이디</P>
+        <textarea cols='30' rows='1' name="user_id" id ="user_id">{{ old('user_id',$member->user_id)}}</textarea>
+        <P>자기소개</P>
+        <textarea cols='30' rows='5' name='intro' id='intro'>{{ old('intro', $member->intro ) }}</textarea>
+        <P>목표</P> 
+        <textarea cols='30' rows='5' name="goal" id ="goal">{{ old('goal',$member->goal) }}</textarea>
+        <p>현재 사진</P>
+        <img src="/images/{{ $member->photo }}" alt="photo x"></br>
+        <p>바꿀 사진</p>
+        <input type="file" name="photo" id="photo" value="{{ old('photo',$member->photo )}}"></br>
     </div>
     <div>
         <button type="submit" class=saveBtn data-id="{{$member->id}}">저장하기</button>
-        <button type="button" class=backBtn>취소</button>
+        <button type="button" class=clsBtn data-id="{{$member->id}}">삭제하기</button>
     </div>
 </form>
 
 <script>
-    $('.backBtn').on('click', function(e){
-        $('.work').empty();
-    });
     $.ajaxSetup({
         headers:{
             'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('.clsBtn').on('click', function(e){
+        var clsId = $(this).attr('data-id');
+        if(confirm('삭제하시겠습니까?')){
+        $.ajax({
+            type: 'DELETE',
+            url: '/introduce/' + clsId
+            }).then(function() {
+                get_list();
+                $('.work').empty();
+            });
+         }
+    });
+    
     $('.saveBtn').on('click', function(e){  
         //GET form
         var form = $('#formData')[0];
@@ -42,9 +60,27 @@
             contentType: false,
             cache: false, 
             success : function(data){
-                get_list();// introduce에서 get_list함수를 호출 
-                $('.work').empty();
+                if($.isEmptyObject(data.error)){
+                    if(data=="idx"){
+                        alert("id가 일치하지않습니다.");
+                    }
+                    else{
+                        console.log(data);
+                        get_list();// introduce에서 get_list함수를 호출 
+                        $('.work').empty();
+                    }
+                }else{
+                    console.log(data.error);
+	                printErrorMsg(data.error);
+	            }    
             }
         });
     });
+    function printErrorMsg (msg) {
+			$(".print-error-msg").find("ul").html('');
+			$.each( msg, function( key, value ) {
+				$(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                $(".print-error-msg").show();
+			});
+		}
 </script>

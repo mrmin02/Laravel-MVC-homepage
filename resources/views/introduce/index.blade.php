@@ -21,16 +21,6 @@
     function intro_edit(id){
         $('.work').load('/introduce/'+id+'/edit');
     }
-    function intro_delete(id){
-        if(confirm('삭제하시겠습니까?')){
-        $.ajax({
-            type: 'DELETE',
-            url: '/introduce/' + id
-            }).then(function() {
-                get_list();
-            });
-         }
-    }
     
     function get_list( board_list ){
         console.log('정상실행됫음 ㅇㅇ');
@@ -58,9 +48,6 @@
                 button.bind('click' , function(e) {intro_edit(board.id)});
                 c_ul.append(button);
                         
-                var button = $(`<li><button type="button">삭제하기</button></li>`);
-                button.bind('click' , function(e) {intro_delete(board.id)});
-                c_ul.append(button);
                 board_div.append(c_ul);
             }); 
         });
