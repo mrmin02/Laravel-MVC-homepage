@@ -20,7 +20,7 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('auth.login');
+        return view('auth.new');
     }
     /**
      * Show the form for creating a new resource.
@@ -29,7 +29,7 @@ class LoginController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        return view('auth.new');
     }
     /**
      * Store a newly created resource in storage.

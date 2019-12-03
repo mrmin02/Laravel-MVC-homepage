@@ -36,7 +36,6 @@ class IntrosRequest extends FormRequest
     {
         return [
             'required' => ':attribute은(는) 필수 입력 항목입니다.',
-            'min' => ':attribute은(는) 최소 :min글자 이상이 필요합니다.',
             'mimes' => ':attribute은 :min 확장자만 지원합니다.'
         ];
     }

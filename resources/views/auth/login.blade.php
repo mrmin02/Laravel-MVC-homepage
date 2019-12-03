@@ -40,6 +40,7 @@
 		<div>
 			<div>
 				<a href="/register">회원가입</a>
+				<a href ="{{route('remind.create')}}">비번 찾기</a>
 			</div>
 		</div>
 	</form>

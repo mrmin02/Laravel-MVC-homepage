@@ -7,7 +7,7 @@
     <meta name='csrf-token' content='{{csrf_token()}}' >
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <title>야스야스 야스</title>
+    <title>현지학기제</title>
 </head>
 <body>
     @yield('content')

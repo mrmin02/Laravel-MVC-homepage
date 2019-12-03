@@ -23,22 +23,21 @@
             {{$question->user->user_id}}
         </p>
     </div>
-    <div class="form-group {{ $errors->has('content') ? 'has-error':'' }}">
+    <div class="form-group {{ $errors->has('content') ? 'has-error':'' }}" >
         <label for="content">내용</label>
-        <p name="content" id="content" rows="10" class="form-control" value="{{ old('content') }}">
-            {{$question->content}}
-        </p>
+        <pre name="content" id="content"  class="form-control" value="{{ old('content') }}" style="height:auto;">{{$question->content}}</pre>
     </div>
     
-    @if(Auth::id() == $question->user_id || isset(auth()->user()->admin) ?  (auth()->user()->admin==1)?1:0  : 0 )
+    <!-- 글을 쓴 사람  or 관리자일 경우. ( 로그인 안했을 경우 admin 오류 날 수 있으니  로그인 안되어있을 경우 admin 값을 0으로 해줌) -->
+    @if(Auth::id() == $question->user_id or isset(auth()->user()->admin) ?  (auth()->user()->admin==1)?1:0  : 0 )
         <div class="buttonadjustment">
+            <!-- 글을 쓴 사람일 경우 ( 수정, 삭제 가능) -->
             @if(Auth::id() == $question->user_id)
             <form action="{{route('questions.edit',[$question->id])}}" method="get" style="display: inline;">
                 <div class="form-group" style="display: inline;">
                     <button type="submit" class="btn btn-primary">수정</button>
                 </div>
             </form>
-            @endif
             <form action="{{route('questions.destroy',[$question->id])}}" method="post" style="display: inline;">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
@@ -46,8 +45,19 @@
                     <button type="submit" class="btn btn-primary">삭제</button>
                 </div>
             </form>
-            
+            <!-- 관리자일 경우 ( 삭제 가능) -->
+            @else
+            <form action="{{route('questions.destroy',[$question->id])}}" method="post" style="display: inline;">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <div class="form-group" style="display: inline;">
+                    <button type="submit" class="btn btn-primary">삭제</button>
+                </div>
+            </form>
+            @endif
         </div>
+    @else
+        <p> 사용자 아님</p>
     @endif
     <div class="form-group">
         <label for="answer">댓글</label><br>
@@ -58,8 +68,6 @@
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <form id="answerSubmit">
-                    <!-- {{ method_field('POST') }}
-                        {{ csrf_field() }}   -->
                     <textarea name="content" id="answer" rows="10" class="form-control" required></textarea>
                     <br>
                     <button class="btn btn-primary" id="answer" type="submit">댓글 작성하기</button>
@@ -125,8 +133,6 @@
     function drawAnswer(datas) { // 데이터로 화면에 나타냄.
 
             $("#answersList").empty();
-
-
             datas.map((data) => {  // {id: , user_id: , content: , created_at: , .. }
                 var csrfVar = "{{ csrf_token() }}"; // 없어도 될 듯.
                 var id = <?php if (Auth::check()){
@@ -134,7 +140,6 @@
                 print(';');
             }else{print("'not login';");}
                 ?>
-                
                 var addButton = '';
                 if ( id == data.user_id || <?php if( isset(auth()->user()->admin) ){print(auth()->user()->admin?1:0);}else{print("false");} ?>){
                     if( id == data.user_id) {
@@ -152,12 +157,10 @@
                     "<button type='submit' class='btn btn-primary'>삭제</button>" +
                     "</div>" +
                     "</form>" ;
-                    
-      
                 }
                 $("#answersList").append("<div id='answer'" + data.id + "><h5>" + data.u_name + 
-                    "</h5><p id='userAnswer"+data.id+"'>" 
-                    + data.content +"</p>"+
+                    "</h5><pre id='userAnswer"+data.id+"' style='height:auto;font-size:20px;'>" 
+                    + data.content +"</pre>"+
                     addButton+
                     "</div>");
                 $("#deleteAnswer" + data.id).submit(function(e) {
@@ -174,7 +177,6 @@
                         success: function(data) {
                             alert("답변 삭제 성공했습니다 !!");
                             drawAnswer(data)
-                            
                         },
                         error: function(data) {
                             alert("답변 삭제 오류 발생" + data);
@@ -182,7 +184,6 @@
                     });
                 });
             });
-
         };
     $(document).ready(function() { // 페이지 로딩 된 후 이벤트 등록, 답변 받아오기 (ajax)
         ajaxShow();

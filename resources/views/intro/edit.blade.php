@@ -1,63 +1,96 @@
-<form id="formData" enctype="multipart/form-data">
-    @csrf
-    <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
-        제목 : <input type="text" name="title" value="{{$intro->title}}"> {!! $errors->first('title', '<span class="form-error">:message</span>') !!}<br/>
-        장소 : <input type="text" name="place" value="{{$intro->place}}"><br/>
-        담당자 : <input type="text" name="master" value="{{$intro->master}}"> {!! $errors->first('master', '<span class="form-error">:message</span>') !!}<br/>
-        요일 : 
-        <select name="weekset[]" multiple="multiple" size="7" data-key="{{$intro->weekset}}">
-        </select><br/>
-        시작시간 : <input type="time" name="starttime" value="{{$intro->starttime}}"><br/>
-        종료시간 : <input type="time" name="endtime" value="{{$intro->endtime}}"><br/>
-        <textarea name="append" cols="30" rows="10" placeholder="세부사항">{{$intro->append}}</textarea><br/>
-        사진 : <input type="file" name="photo"><br/>
-        <button type="submit" class="modBtn" data-id="{{$intro->id}}"> 수정하기 </button>
-        <button type="button" class="clsBtn">닫기</button>
+<form id="formData" enctype="multipart/form-data" >
+ {!! csrf_field() !!}
+ <!-- {!! method_field('PUT')!!} -->
+    <div class="print-error-msg" style="display:none">
+        <ul></ul>
+    </div>
+    <div class="form-group">
+        <h1>내용 수정</h1>
+        <P>이름</P>
+        <textarea cols='30' rows='1' name="name" id ="name">{{ old('name',$member->name)}}</textarea>
+        <P>자기소개</P>
+        <textarea cols='30' rows='5' name='intro' id='intro'>{{ old('intro', $member->intro ) }}</textarea>
+        <P>목표</P> 
+        <textarea cols='30' rows='5' name="goal" id ="goal">{{ old('goal',$member->goal) }}</textarea>
+        <p>현재 사진</P>
+        <img src="/images/{{ $member->photo }}" alt="photo x"></br>
+        <p>바꿀 사진</p>
+        <input type="file" name="photo" id="photo" value="{{ old('photo',$member->photo )}}"></br>
+
+        <h2>관리자 인증</h2>
+        <P>아이디</P>
+        <textarea cols='30' rows='1' name="user_id" id ="user_id"></textarea>
+        <P>비밀번호</P>
+        <textarea cols='30' rows='1' name="password" id ="password"></textarea>
+    </div>
+    <div>
+        <button type="submit" class=saveBtn data-id="{{$member->id}}">저장하기</button>
+        <button type="button" class=clsBtn data-id="{{$member->id}}">삭제하기</button>
     </div>
 </form>
 
 <script>
-    var weekend = ['월','화','수','목','금','토','일'];
-    var select = $('select[name="weekset[]"]');
-    var key = select.attr('data-key');
-    for(i = 0; i<7; i++){
-        var l = i + 1;
-        var option = $('<option value="'+(l)+'"> ' + weekend[i] + ' </option>');
-        if( key.indexOf(l) != -1){ // 문자열 찾기
-            option = $('<option value="'+(l)+'" selected="selected"> ' + weekend[i] + ' </option>');
-        } 
-        select.append(option);
-    }
-    $('.clsBtn').on('click',function(e){
-        $('.btmBlk').empty();
-    });
     $.ajaxSetup({
         headers:{
             'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $('.modBtn').on('click',function(e){
-        // Get form
-        var form = $('#formData')[0];
-        
-        var introId = $(this).attr('data-id');
-        // Create an FormData object 
-        var data = new FormData(form);
-
-        data.append('_method', 'PATCH');
-        e.preventDefault();
+    $('.clsBtn').on('click', function(e){
+        var clsId = $(this).attr('data-id');
+        if(confirm('삭제하시겠습니까?')){
         $.ajax({
-            type: 'POST',
-            url: '/intros/' + introId,
-            data: data,
+            type: 'DELETE',
+            url: '/introduce/' + clsId
+            }).then(function() {
+                get_list();
+                $('.work').empty();
+            });
+         }
+    });
+    
+    $('.saveBtn').on('click', function(e){  
+        //GET form
+        var form = $('#formData')[0];
+        var introId = $(this).attr('data-id'); // member의 id값을 가져옴
+        //js의 this : 이벤트가 발생한 태그요소가 표시
+        //jquery의 $(this) : 이벤트가 발생한 요소의 정보들이 object로 표시
+        //.attr('속성') : 속성의 값을 가져옴
+        //Create an FormData object
+        var data = new FormData(form); // 뭔지모르겟다 
+        data.append('_method', 'PATCH'); // PATCH?
+        e.preventDefault();// 서브밋 행동취소
+        $.ajax({
+            type: 'POST', //ajax는 patch 안먹음
+            url: '/introduce/' + introId,
+            data: data, 
             processData: false,
             contentType: false,
-            cache: false,
+            cache: false, 
             success : function(data){
-                get_list();
-                $('.btmBlk').empty();
+                if($.isEmptyObject(data.error)){
+                    if(data=="idx"){
+                        alert("id가 일치하지않습니다.");
+                    }
+                    else if(data=='passx'){
+                        alert("password가 일치하지않습니다.");
+                    }
+                    else{
+                        console.log(data);
+                        get_list();// introduce에서 get_list함수를 호출 
+                        $('.work').empty();
+                    }
+                }else{
+                    console.log(data.error);
+	                printErrorMsg(data.error);
+	            }    
             }
         });
-        
     });
+    function printErrorMsg (msg) {
+			$(".print-error-msg").find("ul").html('');
+			$.each( msg, function( key, value ) {
+				$(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                $(".print-error-msg").show();
+			});
+		}
 </script>

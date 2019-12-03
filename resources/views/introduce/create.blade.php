@@ -4,10 +4,8 @@
         <ul></ul>
     </div>
     <div class="form-group">
-        <P>아이디</P>
-        <textarea cols='30' rows='1' name="user_id" id ="user_id">{{ old('user_id') }}</textarea>
-        <P>비밀번호</P>
-        <textarea cols='30' rows='1' name="password" id ="password">{{ old('password') }}</textarea>
+        <P>이름</P>
+        <textarea cols='30' rows='5' name='name' id='name'>{{ old('name') }}</textarea>
         <P>자기소개</P>
         <textarea cols='30' rows='5' name='intro' id='intro'>{{ old('intro') }}</textarea>
         <P>목표</P> 
@@ -24,7 +22,7 @@
 </form>
 <script>
     $('.clsBtn').on('click', function(e){
-        $('.work').empty();
+        get_list();
     });
     $.ajaxSetup({
         headers:{
@@ -50,17 +48,10 @@
             cache: false, 
             success : function(data){
                 if($.isEmptyObject(data.error)){
-                    if(data=="idx"){
-                        // alert("id가 일치하지않습니다.");
-                        $(".print-error-msg").find("ul").html('');
-                        $(".print-error-msg").find("ul").append('<li>'+"등록되지않은 ID입니다"+'</li>');
-                        $(".print-error-msg").show();
-                    }
-                    else{
-                        console.log(data);
-                        get_list();// introduce에서 get_list함수를 호출 
-                        $('.work').empty();
-                    }
+                    console.log(data);
+                    get_list();// introduce에서 get_list함수를 호출 
+                    $('.work').empty();
+                    
                 }else{
                     console.log(data.error);
 	                printErrorMsg(data.error);
