@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('auth.register');
+        # 사용 X
     }
     /**
      * Show the form for creating a new resource.
@@ -23,7 +23,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        # 사용 X
     }
     /**
      * Store a newly created resource in storage.

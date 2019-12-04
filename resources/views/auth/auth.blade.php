@@ -121,6 +121,7 @@
               <div>
                   <div>
                       <input id="login" type="submit" name="submit">
+                      <a href ="{{route('remind.create')}}">비밀번호 찾기</a>
                   </div>
               </div>
         </form>
@@ -136,25 +137,10 @@
             <h1>Hello</h1>
             <p>마 니 이길수 있나</p>
                 <button class="ghost" id="signUp">로그인</button>
-                <!-- <a href ="{{route('register.index')}}">register</a> -->
          </div>
       </div>
    </div>
 </div>
-<!-- <script>
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('container');
-
-    signUpButton.addEventListener('click', () => {
-        container.classList.add("right-panel-active");
-    });
-
-    signInButton.addEventListener('click', () => {
-        container.classList.remove("right-panel-active");
-    });
-</script> -->
-<!-- <script src="{{ asset('css/app.css')}}"></script> -->
 <script>       
 </script>
 </body>

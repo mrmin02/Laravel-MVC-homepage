@@ -1,69 +1,57 @@
-<form action="{{ route('introduce.store') }}" id="formData" method="POST" enctype="multipart/form-data">
- {!! csrf_field() !!}
-    <div class="print-error-msg" style="display:none">
-        <ul></ul>
-    </div>
-    <div class="form-group">
-        <P>이름</P>
-        <textarea cols='30' rows='5' name='name' id='name'>{{ old('name') }}</textarea>
-        <P>자기소개</P>
-        <textarea cols='30' rows='5' name='intro' id='intro'>{{ old('intro') }}</textarea>
-        <P>목표</P> 
-        <textarea cols='30' rows='5' name="goal" id ="goal">{{ old('goal') }}</textarea>
-        <p>사진</p> 
-        <input type="file" name="photo" id="photo">
-    </div>
-
+<form id="formData" enctype="multipart/form-data">
+    @csrf
     <div>
-    </br>
-        <button type="submit" class=addBtn>저장하기</button>
-        <button type="button" class=clsBtn>취소</button>
+        제목 : <input type="text" name="title" id="title"><br/>
+        장소 : <input type="text" name="place" id="place"><br/>
+        담당자 : <input type="text" name="master" id="master"><br/>
+        요일 : 
+        <select name="weekset[]" multiple="multiple" size="7" id="weekset">
+            <option value="1">월</option>
+            <option value="2">화</option>
+            <option value="3">수</option>
+            <option value="4">목</option>
+            <option value="5">금</option>
+            <option value="6">토</option>
+            <option value="7">일</option>
+        </select>
+        <br/>
+        시작시간 : <input type="time" name="starttime" id="starttime"><br/>
+        종료시간 : <input type="time" name="endtime" id="endtime"><br/>
+        <textarea name="append" cols="30" rows="10" placeholder="세부사항" id="append"></textarea><br/>
+        사진 : <input type="file" name="photo"><br/>
+        <div class='btnBlk'>
+            @if($lv)
+            <button type='submit' class='addBtn'> 등록하기 </button>
+            @endif
+            <button type='button' class='clsBtn'>닫기</button>
+        </div>
     </div>
 </form>
 <script>
-    $('.clsBtn').on('click', function(e){
+$(document).ready(function() {
+    $('.clsBtn').on('click',function(e){
         get_list();
     });
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+    $('#formData').on('submit',function(e){
+        e.preventDefault();
+        var form = $('#formData')[0];
+        // Create an FormData object 
+        var data = new FormData(form);
+        if(valid_chk(data)){
+            $.ajax({
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                url: '/intros',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success : function(data){
+                    alert(data["message"]);
+                    if(data["status"]) get_list();
+                }
+            });
         }
     });
-    $('.addBtn').on('click', function(e){  
-        //GET form
-        //제이쿼리에서 .은 클래스 #은 id로 접근시 사용한다.
-        var form = $('#formData')[0]; // 뭐지이건
-        //Create an FormData object
-        var data = new FormData(form); // 뭔지모르겟다 
-        e.preventDefault();// 서브밋 행동취소(왜 쓰는지는 모르겟음)
-        
-        
-        $.ajax({
-            type: 'POST',
-            enctype: 'multipart/form-data',
-            url: '/introduce',
-            data: data, // 모르겠다
-            processData: false,
-            contentType: false,
-            cache: false, 
-            success : function(data){
-                if($.isEmptyObject(data.error)){
-                    console.log(data);
-                    get_list();// introduce에서 get_list함수를 호출 
-                    $('.work').empty();
-                    
-                }else{
-                    console.log(data.error);
-	                printErrorMsg(data.error);
-	            }    
-            }
-        });
-    });
-    function printErrorMsg (msg) {
-			$(".print-error-msg").find("ul").html('');
-			$.each( msg, function( key, value ) {
-				$(".print-error-msg").find("ul").append('<li>'+value+'</li>');
-                $(".print-error-msg").show();
-			});
-		}
+});
 </script>
