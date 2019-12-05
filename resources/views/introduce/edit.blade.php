@@ -40,13 +40,39 @@
         if(confirm('삭제하시겠습니까?')){
         $.ajax({
             type: 'DELETE',
-            url: '/introduce/' + clsId
-            }).then(function() {
-                get_list();
-                $('.work').empty();
+            data: {
+                user_id : $('#user_id').val(),
+                password : $('#password').val(),
+                
+            },
+            url: '/introduce/' + clsId,   
+            }).then(function(data) {
+                if(data=="idx"){
+                    alert("관리자 아이디가 아닙니다.");
+                }
+                else if(data=='passx'){
+                    alert("password가 일치하지않습니다.");
+                }
+                else{
+                    get_list();
+                    $('.work').empty();
+                }
             });
          }
     });
+    // $('.clsBtn').on('click', function(e){
+    //     var clsId = $(this).attr('data-id');
+    //     if(confirm('삭제하시겠습니까?')){
+    //     $.ajax({
+    //         type: 'DELETE',
+    //         url: '/introduce/' + clsId
+    //         }).then(function() {
+    //             get_list();
+    //             $('.work').empty();
+    //         });
+    //      }
+    // });
+    
     
     $('.saveBtn').on('click', function(e){  
         //GET form
@@ -69,7 +95,7 @@
             success : function(data){
                 if($.isEmptyObject(data.error)){
                     if(data=="idx"){
-                        alert("id가 일치하지않습니다.");
+                        alert("관리자 아이디가 아닙니다.");
                     }
                     else if(data=='passx'){
                         alert("password가 일치하지않습니다.");

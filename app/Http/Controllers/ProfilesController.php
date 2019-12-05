@@ -64,7 +64,7 @@ class ProfilesController extends Controller
     public function update_info(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|min:2',
             'email' => 'required|max:255',
             'phone' =>'required|max:255',
             'birth' =>'required|max:255',      
@@ -95,11 +95,18 @@ class ProfilesController extends Controller
         //
         return view('profile.edit_pwd');
     }
-    public function update_pwd(Request $request, $id)
+    public function update_pwd(Request $request, $id) # 유저 패스워드 변경
     {
         $validator = Validator::make($request->all(), [
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|confirmed|min:6',
         ]);
+        $validator->validate();
+        
+        if($validator->fails()){
+            return response()->json([
+                'status'=>'error',
+            ], 200);
+        }
         $password = Hash::make($request->password);
 
         $user = \App\User::find(auth()->user()->id)->update([

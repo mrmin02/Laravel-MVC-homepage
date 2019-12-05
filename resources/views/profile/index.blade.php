@@ -86,12 +86,19 @@
                 @endforelse
             </tbody>
         </table>
-
     @endif
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
+    @error('password')        
+        alert("{{$message}}");
+    @enderror
+    @error('name')        
+        alert("{{$message}}");
+    @enderror
+    
+
     $('.edit_info').on('click', function(e){
         console.log("정보 변경 가기");
         $('.user_questions').empty();

@@ -14,7 +14,7 @@ class IntroduceContoller extends Controller
     public function index()
     {            
         $members = \App\Member::all();                       
-        return view('introduce.index',['lv'=>isset(auth()->user()->admin) ? auth()->user()->admin : 0 ]);
+        return view('introduce.index',['lv'=>isset(auth()->user()->admin) ? ((auth()->user()->admin == 1) ? 1 : 0 ) : 0 ]);
     }
     /**
      * Show the form for creating a new resource.
@@ -119,7 +119,7 @@ class IntroduceContoller extends Controller
         }
     
         
-        $users = \App\User::where('user_id',$request->user_id)->first();
+        $users = \App\User::where('user_id',$request->user_id)->where('admin',1)->first();
         if($users){
             if (!password_verify($request->password, $users->password)) {
                 return "passx";
@@ -142,13 +142,25 @@ class IntroduceContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) //Member = id 가 넘어옴
+    public function destroy(request $request ,$id) //Member = id 가 넘어옴
     {
-        $oldPhoto = \App\Member::where('id','=', $id)->first(); 
-        if ($oldPhoto->photo != '이미지없음') {
-        unlink(storage_path('../public/images/'.$oldPhoto->photo));
+        $users = \App\User::where('user_id', $request->user_id)->where('admin',1)->first();
+        if($users){
+            if (!password_verify($request->password, $users->password)) {
+                return "passx";
+            }
+            $oldPhoto = \App\Member::where('id','=', $id)->first(); 
+            if ($oldPhoto->photo != '이미지없음') {
+            unlink(storage_path('../public/images/'.$oldPhoto->photo));
+            }
+            \App\Member::where('id', $id)->delete(); // $id와 같은 user_id의 값을 삭제 
+            return response()->json([],204);   
         }
-        \App\Member::where('id', $id)->delete(); // $id와 같은 user_id의 값을 삭제 
-        return response()->json([],204);   
+        else{
+            return "idx";
+        }
+        
+        
+       
     }
 }

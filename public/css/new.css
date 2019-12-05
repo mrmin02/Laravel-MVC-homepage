@@ -6,7 +6,7 @@
 
 body {
    /* background: #f6f5f7; */
-   background: black;
+   background: rgb(245, 245, 245);
    display: flex;
    justify-content: center;
    align-items: center;
@@ -20,10 +20,10 @@ h1 {
    font-weight: bold;
    margin: 0;
 }
-
-h2 {
+/*   --- */
+h2 { 
    text-align: center;
-   color: gold;
+   color: #1313aa;
 }
 
 p {
@@ -113,8 +113,8 @@ input {
    height: 100%;
    transition: all 0.6s ease-in-out;
 }
-
-.sign-in-container {
+/* 수정해 보기 */
+.sign-in-container { 
    left: 0;
    width: 50%;
    height: auto;
@@ -165,11 +165,11 @@ input {
 .container.right-panel-active .overlay-container{
    transform: translateX(-100%);
 }
-
+/* #FF416C */
 .overlay {
-   background: #FF416C;
-   background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-   background: linear-gradient(to right, #FF4B2B, #FF416C);
+   background: #FF416C; 
+   background: -webkit-linear-gradient(to right, #FF416C, #FFFFFF);
+   background: linear-gradient(to left, #FF416C,rgb(255, 148, 173));
    background-repeat: no-repeat;
    background-size: cover;
    background-position: 0 0;
