@@ -1,4 +1,4 @@
-@extends('layouts.mainnav')
+@extends('layouts.profile')
 
 @section('content')
 <br><br>
@@ -101,8 +101,6 @@
         console.log("정보 변경 가기");
         $('.user_questions').empty();
         $('.mid').load('/profile/{{$user_info->user_id}}/edit_info');
-
-
     });
     $('.edit_pwd').on('click', function(e){
         console.log("비밀번호 변경 가기")
@@ -116,7 +114,6 @@
                 var admin_s = "유저";
             else
                 var admin_s = "관리자";
-
             body += "<tr>"+
                 "<td>"+user.id+"</td>"+
                 "<td>"+user.user_id+"</td>"+
@@ -149,7 +146,6 @@
                 }
             });
     }
-
     function delete_user(id){
         $.ajax({
                 headers:{

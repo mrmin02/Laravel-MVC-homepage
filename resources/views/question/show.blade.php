@@ -1,4 +1,4 @@
-@extends('layouts.mainnav')
+@extends('layouts.profile')
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -57,7 +57,7 @@
             @endif
         </div>
     @else
-        <p> 사용자 아님</p>
+        <br><br>
     @endif
     <div class="form-group">
         <label for="answer">댓글</label><br>

@@ -267,6 +267,5 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{asset('startbootstrap-modern-business/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('startbootstrap-modern-business/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>

@@ -1,8 +1,9 @@
-@extends('layouts.mainnav')
+@extends('layouts.profile')
 
 @section('content')
     <div class="container">
-        <h1>새 포럼 글쓰기</h1>
+        <br><br>
+        <h2>새로운 질문 작성</h2>
         <hr/>
         <!-- {{-- css 는 bootstrap 4.3.1 을 사용함. 9장에  
         php artisan ui:vue --auth, npm i , npm run dev 에 의해서. 라이브러리 설치가 되고, 

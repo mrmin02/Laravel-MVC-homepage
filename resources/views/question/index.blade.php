@@ -1,7 +1,8 @@
-@extends('layouts.mainnav')
+@extends('layouts.profile')
 
 @section('content')
 <!-- <img src="{{ asset('pic/winter_14-wallpaper-1920x1080.jpg') }}" width=100% height="500px" alt="Responsive image"> -->
+<br/>
 <div class="container">
                     <table class="table table-hover">
                         <thead>
@@ -35,6 +36,7 @@
             {{--XSS 방지 기능 무력화 , 보호기능 끄기: htmlspecialchars 이거 안하기==> render 로 테그를 만드는데 뭐 마음대로 바뀌니까.--}}
         </div>
     @endif
+    <div> <a href="/questions/create" style="background-color:#2E9AFE;color:white;padding:10px;border-radius:15px;font-size:20px;">작성</a></div>
 </div>
 
 @stop

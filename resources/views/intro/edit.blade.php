@@ -1,36 +1,69 @@
 <form id="formData" enctype="multipart/form-data">
     @csrf
-    <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
-        제목 : <input type="text" name="title" value="{{$intro->title}}"><br/>
-        장소 : <input type="text" name="place" value="{{$intro->place}}"><br/>
-        담당자 : <input type="text" name="master" value="{{$intro->master}}"><br/>
-        요일 : 
-        <select name="weekset[]" multiple="multiple" size="7" data-key="{{$intro->weekset}}">
-        </select><br/>
-        시작시간 : <input type="time" name="starttime" value="{{$intro->starttime}}"><br/>
-        종료시간 : <input type="time" name="endtime" value="{{$intro->endtime}}"><br/>
-        <textarea name="append" cols="30" rows="10" placeholder="세부사항">{{$intro->append}}</textarea><br/>
-        사진 : <input type="file" name="photo"><br/>
-        <div class='btnBlk'>
-            @if($lv)
-            <button type="submit" class="modBtn" data-id="{{$intro->id}}"> 수정하기 </button>
-            @endif
-            <button type="button" class="clsBtn">닫기</button>
+    <div class="form-group">
+        <label for="title">제목 : </label>
+        </label><input type="text" name="title" id="title" class="form-control" value="{{$intro->title}}">
+    </div>
+    <div class="form-group">
+       <label for="place">장소 : </label>
+        <input type="text" name="place" id="place" class="form-control" value="{{$intro->place}}">
+    </div>
+    <div class="form-group">
+        <label for="master">담당자 : </label>
+        <input type="text" name="master" id="master" class="form-control" value="{{$intro->master}}">
+    </div>
+    <div class="form-group">
+    <label for="weekset">요일 : </label>
+        <div class='selectBar' id='weekset'>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="starttime">시작시간 : </label>
+        <input type="time" name="starttime" id="starttime" class="form-control" value="{{$intro->starttime}}">
+    </div>
+    <div class="form-group">
+        <label for="endtime">종료시간 : </label>
+        <input type="time" name="endtime" id="endtime" class="form-control" value="{{$intro->endtime}}">
+    </div>
+    <div class="form-group">
+        <textarea name="append" cols="30" rows="10" id="title" class="form-control" placeholder="세부사항">{{$intro->append}}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="photo">사진 : </label>
+        <input type="file" name="photo" id="photo">
+    </div>
+    <div class='btnBlk'>
+        @if($lv)
+        <button type="submit" class="modBtn btn btn-primary"> 수정하기 </button>
+        @endif
+        <button type="button" class="clsBtn btn btn-primary">닫기</button>
     </div>
 </form>
 
 <script>
-    var select = $('select[name="weekset[]"]');
-    var key = select.attr('data-key');
+    var weekset = '';
+    var select = $('#weekset');
+    var key = "{{$intro->weekset}}";
     for(i = 0; i<7; i++){
         var l = i + 1;
-        var option = $('<option value="'+(l)+'"> ' + weeknd[i] + ' </option>');
+        var option = $(`<button type="button" data-value="${l}" class='selec_on'>${weeknd[i]}</button>`);
         if( key.indexOf(l) != -1){ // 문자열 찾기
-            option = $('<option value="'+(l)+'" selected="selected"> ' + weeknd[i] + ' </option>');
-        } 
+            option = $(`<button type="button" data-value="${l}" class='selec_off'>${weeknd[i]}</button>`);
+        }
         select.append(option);
     }
+    $('.selectBar > button').on('click',function(){
+        var val = $(this).attr('data-value');
+        if($(this).hasClass("selec_off")){
+            $(this).removeClass('selec_off');
+            $(this).addClass('selec_on');
+            weekset += val;
+        }else{
+            $(this).removeClass('selec_on');
+            $(this).addClass('selec_off');
+            weekset = weekset.replace(val,'');
+        }
+    });
     $('.clsBtn').on('click',function(e){
         load_page({{$intro->id}});
     });
@@ -38,23 +71,27 @@
         e.preventDefault();
         // Get form
         var form = $('#formData')[0];
-        var introId = $(this).attr('data-id');
         // Create an FormData object 
         var data = new FormData(form);
         data.append('_method', 'PATCH');
         if(valid_chk(data)){
             $.ajax({
-                type: 'POST',
-                url: '/intros/' + introId,
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
+                type:'POST',
+                url: '/intros/' + {{$intro->id}},
+                data:data,
+                processData:false,
+                contentType:false,
+                cache:false,
                 success : function(data){
                     alert(data["message"]);
-                    if(data["status"]) get_list();
+                    if(data["status"]) load_page({{$intro->id}});
                 }
             });
         }
     });
 </script>
+<style>
+    .selectBar button { padding:15px 20px; font:bold 12px malgun gothic; }
+    .selectBar .selec_off {background:#bbbbbb; color:#444444; border:solid 2px #dddddd; }
+    .selectBar .selec_on {background:#0069d9; color:white; border:solid 2px #007bff;}
+</style>

@@ -5,8 +5,7 @@
     }
     ##  composer.json  autoload  에  "files": ["app/helper.php"] 추가 후.
     ##  composer dump-autoload --optimize
-
-    function time_check($time){ # 시간단위로 자르기
+    function time_check($time){
         $timecut = substr($time,0,2); //문자열 앞에서 2개(시간)만 출력
         if($timecut == '00') $time = substr_replace($time, '12', 0,2);
         if($timecut == '12') $time = substr_replace($time, '00', 0,2);
@@ -22,10 +21,10 @@
         if($starttime < "09:00" || $starttime > "18:00" || $endtime < "09:00" || $endtime > "18:00"){
             return ['message'=>'시간은 09시부터 12시까지 가능합니다.','status'=>false];
         }
-        $weekset = '';
-        $count = count($request->weekset);
+        $weekset = $request->weekset;
+        $count = strlen($weekset);
         for($i = 0; $i < $count; $i++){
-            $key = $request->weekset[$i];
+            $key = substr($weekset, $i,1);
             $dateData = \App\Intro::where('weekset','like', '%'.$key.'%')->Where('id', '!=' , $id)->get();
             foreach($dateData as $data){
                 $oldstart = $data->starttime;
@@ -34,11 +33,9 @@
                     return ['이미 존재하는 시간표 입니다.','status'=>false];
                 }
             }
-            $weekset .= $key;
         }
         return ['message'=>$weekset,'status'=>true];
     }
-
     # Q&A
     function return_user_name($answers){# 데이터를 받고 , 기존 데이터에  데이터를 작성한 유저의 이름을 반환.
         
@@ -49,7 +46,6 @@
             $data[$count]['u_name']=\App\User::find($answer->user_id)->user_id;
             $count ++;
         }
-
         return $data;
     }
 ?>
