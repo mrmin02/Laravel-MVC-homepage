@@ -33,9 +33,9 @@ class IntroduceContoller extends Controller
     public function store(Request $request)  # 조원 저장 
     {   
         $validator = \Validator::make($request->all(), [ # 유효성 검사
-            'name' => 'required',
-            'intro' => 'required',
-            'goal' => 'required',
+            'name' => 'required|max:10',
+            'intro' => 'required|max:30',
+            'goal' => 'required|max:30',
         ]);
 
         if ($validator->fails())  # 유효성 검사에서 실패한 경우
@@ -94,9 +94,9 @@ class IntroduceContoller extends Controller
     public function update(Request $request, $id) # 조원 소개 업데이트
     {
         $validator = \Validator::make($request->all(), [ # 유효성 검사
-            'name' => 'required',
-            'intro' => 'required',
-            'goal' => 'required',
+            'name' => 'required|max:10',
+            'intro' => 'required|max:30',
+            'goal' => 'required|max:30',
             'user_id' => 'required',
             'password' => 'required',
         ]);

@@ -1,6 +1,5 @@
 <form id="formData" enctype="multipart/form-data" >
  {!! csrf_field() !!}
- <!-- {!! method_field('PUT')!!} -->
     <div class="print-error-msg" style="display:none">
         <ul></ul>
     </div>

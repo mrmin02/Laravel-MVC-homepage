@@ -49,23 +49,6 @@
             board_div.html('');//이건 머꼬?
             board_list.map(board=>{
                 
-                // var div_card = $(`<div class="card mb-3" style="width: 540px;">`+
-                // `<div class="row no-gutters">`+
-                // `<div class="col-md-4">`+
-                // `<img src="images/${board.photo}" class="card-img" alt="사진없음">`+
-                // `</div>`+
-                // `<div class="col-md-8">`+
-                // `<div class="card-body">`+
-                // `<h5 class="card-title text-white">${board.name}</h5>`+
-                // `<p class="card-text text-white">${board.intro}</p>`+
-                // `<p class="card-text text-white">${board.goal}</p>`+
-                // `</div>`+`</div>`+`</div>`+`</div>`);
-                // board_div.append(div_card);
-                
-                // var button = $(`<li><button type="button"class="btn btn-primary creBtn" data-toggle="modal" data-target="#exampleModalLong">수정하기</button></li>`);
-                // button.bind('click' , function(e) {intro_edit(board.id)});
-                        
-                // board_div.append(button);
                 var div_card = $(`<div class="card mb-3" style="width: 540px;">`);
                 var div_row = $(`<div class="row no-gutters">`);
                 var div_col1 = $(`<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 hovereffect">`);
@@ -79,7 +62,8 @@
                 var modal_str = `<div class="overlay creBtn" `;
                 if({{$lv}}) modal_str += ` data-toggle="modal" data-target="#exampleModalLong"`;
                 var img_script = $(modal_str + '>');
-                var script_content = $(`<h2>team 3</h2>`);
+
+                var script_content = $(`<p>TEAM 3</p>`);
                 var script_content1 = $(`<p>${board.name}<p>`);
                 if({{$lv}}){
                     img_script.bind('click' , function(e) {
@@ -88,6 +72,7 @@
                 }
                 img_script.append(script_content);
                 img_script.append(script_content1);
+
                 div_col1.append(img);
                 div_col1.append(img_script);
                 div_row.append(div_col1);
