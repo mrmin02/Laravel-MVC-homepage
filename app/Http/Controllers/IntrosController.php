@@ -12,8 +12,12 @@ class IntrosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
+        # 로그인 되어 있는 지 확인 -> 
+        #되어있으면 : 
+                    #어드민인지 확인 : 어드민이면 1  아니면 0  
+        #되어 있지 않으면: 0
         return view('intro.index',['lv'=>(isset(auth()->user()->admin) ? ((auth()->user()->admin == 1) ? 1 : 0) : 0)]);  
     }
     /**
@@ -21,7 +25,7 @@ class IntrosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() # 관리자인 것인지 확인
     {
         return view('intro.create',['lv'=>(isset(auth()->user()->admin) ? ((auth()->user()->admin == 1) ? 1 : 0) : 0)]);
     }
@@ -31,9 +35,9 @@ class IntrosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) # 현지 학기제 일정 저장
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(), [ # 유효성 검사
             'title' => 'required',
             'place' => 'required',
             'master' => 'required',
@@ -42,15 +46,18 @@ class IntrosController extends Controller
             'endtime' => 'required',
             'append' => 'required',
         ]);
-        if ($validator->fails())
+        if ($validator->fails()) # 유효성 검사에 실패한 경우
         {
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return response()->json(['error'=>$validator->errors()->all()]); # error 에 에러 사항 저장해서 전송
         }
-        $request->starttime = time_check($request->starttime);
-        $request->endtime = time_check($request->endtime);
-        $weekset = week_check($request);
-        if($weekset['status']){
-            if ($request->hasFile('photo')) {
+
+        # app/helper.php 에 있는 함수들  
+        $request->starttime = time_check($request->starttime); # 시작시간     (시간단위)
+        $request->endtime = time_check($request->endtime);     # 끝나는 시간  (시간단위)
+        $weekset = week_check($request); # 시작 시간, 끝 시간 이 올바른지 체크, 기존의 시간표와 같은 것인지 체크
+
+        if($weekset['status']){  # 정상적인 시간표이면 
+            if ($request->hasFile('photo')) { # 사진이 있으면
                 $photo = $request->file('photo');
                 $filename = Str::random(15).filter_var($photo->getClientOriginalName(),FILTER_SANITIZE_URL);
                 // 중복방지를 위해 랜덤문자열 + filter_var(첫번째 인자값의 내용중 두번째인자 필터를 이용해서 필터링)
@@ -58,6 +65,7 @@ class IntrosController extends Controller
                 $photo->move(attachements_path(),$filename);
                 // 파일을 원하는 위치로 옮기는 구문
             }
+            # 현지학기제 정보 생성
             $intro = Intro::create([
                 'title' => $request->title,
                 'append' => $request->append,
@@ -72,7 +80,7 @@ class IntrosController extends Controller
                 'message'=>'등록되었습니다.',
                 'status'=>true
             ],201);
-        }
+        } # 정상적인 시간표가 아니면
         return response()->json(['message'=>$weekset['message'],'status'=>$weekset['status']],201);
     }
     
@@ -82,13 +90,17 @@ class IntrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) #  보여주기
     {
-        $intro = Intro::where('id','=', $id)->first();
+        $intro = Intro::where('id','=', $id)->first(); 
         $weeknd = [ '월', '화', '수', '목', '금', '토', '일' ];
         for($i = 0; $i < 7; $i++){
+            # 요일이 DB 에는 숫자로 들어가 있음. -> 문자로 바꿔주기
+
+            # 문자열 치환   바뀔 문자, 바꿀 문자, 대상이 되는 문자열   
             $intro->weekset = str_replace(($i+1),$weeknd[$i],$intro->weekset);
         }
+        # 현지학기 정보와 유저가 관리자 인지 반환
         return view('intro.show',['intro'=>$intro,'lv'=>(isset(auth()->user()->admin) ? ((auth()->user()->admin == 1) ? 1 : 0) : 0)]);
     }
     /**
@@ -96,12 +108,13 @@ class IntrosController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+     */ 
+    public function edit($id) # 수정 뷰 제공
     {
-        $intro = Intro::where('id', $id)->first();
-        $intro->starttime = time_check($intro->starttime);
-        $intro->endtime = time_check($intro->endtime);
+        $intro = Intro::where('id', $id)->first(); # 아이디에 해당하는 항목 정보 가져옴
+        $intro->starttime = time_check($intro->starttime);  # 시간  2자리만 가져옴
+        $intro->endtime = time_check($intro->endtime);      # 시간 2자리만 가져옴
+        # 뷰와, 현지학기 정보, 관리지 여부  전송
         return view('intro.edit',['intro'=>$intro,'lv'=>(isset(auth()->user()->admin) ? ((auth()->user()->admin == 1) ? 1 : 0) : 0)]);
     }
     /**
@@ -111,23 +124,24 @@ class IntrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(IntrosRequest $request, $id)
+    public function update(IntrosRequest $request, $id) # 업데이트
     {
-        $request->starttime = time_check($request->starttime);
-        $request->endtime = time_check($request->endtime);
-        $weekset = week_check($request,$id);
-        if($weekset['status']){
+        $request->starttime = time_check($request->starttime); # 시간 2자리
+        $request->endtime = time_check($request->endtime);     # 시간 2자리
+        $weekset = week_check($request,$id);                   # 올바른 요일인지 체크
+        if($weekset['status']){ 
             $oldPhoto = Intro::where('id','=', $id)->first();
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo');
+                # 랜덤 문자열
                 $filename = Str::random(15).filter_var($photo->getClientOriginalName(),FILTER_SANITIZE_URL);
-                $photo->move(attachements_path(),$filename);
+                $photo->move(attachements_path(),$filename);# 파일 저장
                 if($oldPhoto->$photo === '' || file_exists(storage_path('../public/images/'.$oldPhoto->photo))){
                     unlink(storage_path('../public/images/'.$oldPhoto->photo)); // 기존파일 삭제
                 }
                 //unlink : 파일삭제 storage_path: 주어진 파일의 절대경로 반환
             }
-            $intro = Intro::where('id', $id)->update([
+            $intro = Intro::where('id', $id)->update([ # DB 업데이트
                 'title' => $request->title,
                 'append' => $request->append,
                 'place' => $request->place,
@@ -150,13 +164,15 @@ class IntrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) # 현지학기제 항목 삭제
     {
-        $oldPhoto = Intro::where('id','=', $id)->first();
+        $oldPhoto = Intro::where('id','=', $id)->first(); # 삭제할 정보
         if($oldPhoto->photo !== '' && file_exists(storage_path('../public/images/'.$oldPhoto->photo))){
             unlink(storage_path('../public/images/'.$oldPhoto->photo)); // 기존파일 삭제
         }
-        Intro::where('id', $id)->delete();
+        
+        Intro::where('id', $id)->delete(); # 삭제 
+
         return response()->json([
             'message'=>'삭제되었습니다.',
             'status'=>true

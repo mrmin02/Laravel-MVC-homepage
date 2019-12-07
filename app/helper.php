@@ -5,7 +5,8 @@
     }
     ##  composer.json  autoload  에  "files": ["app/helper.php"] 추가 후.
     ##  composer dump-autoload --optimize
-    function time_check($time){
+
+    function time_check($time){ # 시간단위로 자르기
         $timecut = substr($time,0,2); //문자열 앞에서 2개(시간)만 출력
         if($timecut == '00') $time = substr_replace($time, '12', 0,2);
         if($timecut == '12') $time = substr_replace($time, '00', 0,2);

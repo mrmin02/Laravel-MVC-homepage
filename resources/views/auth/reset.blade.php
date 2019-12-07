@@ -15,7 +15,7 @@
     </div>
 
     <div class="form-group">
-      <input type="user_id" name="user_id" class="form-control" placeholder="{{ trans('auth.form.user_id') }}" value="{{ old('user_id') }}" autofocus>
+      <input type="user_id" name="user_id" class="form-control" placeholder="아이디" value="{{ old('user_id') }}" autofocus>
       {!! $errors->first('user_id', '<span class="form-error">:message</span>') !!}
     </div>  
 

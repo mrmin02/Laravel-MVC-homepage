@@ -4,23 +4,51 @@
         <ul></ul>
     </div>
     <div class="form-group">
-        <P>이름</P>
-        <textarea cols='30' rows='5' name='name' id='name'>{{ old('name') }}</textarea>
-        <P>자기소개</P>
-        <textarea cols='30' rows='5' name='intro' id='intro'>{{ old('intro') }}</textarea>
-        <P>목표</P> 
-        <textarea cols='30' rows='5' name="goal" id ="goal">{{ old('goal') }}</textarea>
-        <p>사진</p> 
-        <input type="file" name="photo" id="photo">
+        <div class ="create">
+            <P>이름</P>
+            <input name="name" id ="name" value="{{ old('name')}}"></input>
+            <P>자기소개</P>
+            <textarea cols='62' rows='3' name='intro' id='intro'>{{ old('intro') }}</textarea>
+            <P>목표</P> 
+            <textarea cols='62' rows='3' name="goal" id ="goal">{{ old('goal') }}</textarea>
+        </div>
+        <div class = img_wrap>
+            <p>사진</p> 
+            <input type="file" name="photo" id="photo">
+            <!-- 미리보기 출력 -->
+            <p>최근 선택한 이미지</p>  
+            <img id ="nowPhoto"/>
+        </div>
     </div>
 
     <div>
     </br>
-        <button type="submit" class=addBtn>저장하기</button>
-        <button type="button" class=clsBtn>취소</button>
+        <button type="submit" class="addBtn btn btn-secondary">저장하기</button>
+        <button type="button" class="clsBtn btn btn-secondary" data-dismiss="modal">취소</button>
     </div>
 </form>
 <script>
+//이미지 미리보기 
+var sel_file;
+$(document).ready(function(){
+    $('#photo').on("change", handleImgFileSelect);
+});
+function handleImgFileSelect(e){
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+    filesArr.forEach(function(f){
+        if(!f.type.match("image.*")) {
+            alert("사진출력은 이미지 확장자만 가능합니다.");
+            return;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $("#nowPhoto").attr("src", e.target.result);
+        }
+            reader.readAsDataURL(f);
+        });
+    }
     $('.clsBtn').on('click', function(e){
         get_list();
     });
@@ -50,7 +78,10 @@
                 if($.isEmptyObject(data.error)){
                     console.log(data);
                     get_list();// introduce에서 get_list함수를 호출 
-                    $('.work').empty();
+                    $('.modal-body').empty();
+                    $('#exampleModalLong').modal('hide');
+                    // $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
                     
                 }else{
                     console.log(data.error);

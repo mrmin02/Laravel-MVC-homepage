@@ -18,7 +18,7 @@ class LoginController extends Controller
     //     ]);
     // }
 
-    public function index()
+    public function index() # 로그인 화면 
     {
         return view('auth.auth');
     }
@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() # 로그인 화면 
     {
         return view('auth.auth');
     }
@@ -37,25 +37,22 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)# 로그인
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [ # 유효성 검사
             'user_id' => 'required|max:255',
             'password' => 'required|min:6', 
         ]);
-        if(! auth()->attempt($request->only('user_id', 'password'))){
-            flash('Password was not matched');
-            return back()->withInput();
-        }# 로그인 실패
+        $validator->validate(); #실패했을 경우 redirect + 에러정보 
+        
+        if(! auth()->attempt($request->only('user_id', 'password'))){ # 로그인에 실패한 경우
+            flash('Password was not matched'); #플레쉬 메시지
+            return back()->withInput(); # input 입력 값을 가지고 이전 화면으로 감
+        }
 
-        // if(! auth()->user()->id){
-        //     auth()->logout();
-        //     flash('가입 안되어 있음');
-        //     return back()->withInput();
-        // }
         flash(auth()->user()->user_id.'님 환영합니다');
-        return redirect()->intended('/');
-        // return redirect('welcom');
+        return redirect()->intended('/'); 
+
     }
     /**
      * Display the specified resource.

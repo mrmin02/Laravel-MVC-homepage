@@ -25,7 +25,7 @@
 <body>
 
   <!-- Navigation -->
-  
+
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-darkblue fixed-top">
   <a class="navbar-brand" href="{{url('/')}}">YORIYOI</a>
     <div class="container">
@@ -61,11 +61,11 @@
               <!-- <a class="dropdown-item" href="http://yjp.ac.kr">영진</a> -->
             </div>
             @endauth
-          </li>  
+          </li>
         </ul>
       </div>
     </div>
-     
+
                     @auth
                       <!-- 드롭다운으로 할것-->
                       <!-- <div class="namep">
@@ -78,14 +78,14 @@
                           <div class="form-group1">
                             <!-- <button type="submit" class="btn btn-primary1">삭제</button> -->
                             <button type="submit" class="btn btn-primary1">logout</button>
-                          
+
                           </div>
                         </form>
                     @else
                     <!-- <div class="Login"> -->
-                    <div class="form-group1">  
+                    <div class="form-group1">
                       <div class="btn btn-primary1">
-                        
+
                         <a href="{{ route('login.index') }}">Login</a>
                         @if (Route::has('register'))
                             <a href="{{ route('register.index') }}">Register</a>
@@ -93,11 +93,11 @@
                     @endauth
                       </div>
                     </div>
-                
+
         </div>
   </nav>
- 
-  <header> 
+
+  <header>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -124,12 +124,12 @@
           </div>
         </div>
       </div>
-    
+
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-     
+
       <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
@@ -137,60 +137,53 @@
     </div>
   </header>
 
- 
+
     <!-- Portfolio Section -->
     <br>
     <!-- <h2>조원 소개</h2> -->
     <div class="row">
-      <div class="col-lg-2 col-sm-2 portfolio-item">
+      <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
           <a href="#"><img class="card-img-top" src="/images/1.jpg" alt=""></a>
-          <!-- <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">조준경 화이팅</a>
-            </h4>
-          </div> -->
+          <div class="middle">
+            <div class="middletext">조원소개</div>
+          </div>
         </div>
       </div>
-      <div class="col-lg-2 col-sm-2 portfolio-item">
+      <div class="col-lg-4 col-sm-2 portfolio-item">
         <div class="card h-100">
           <a href="#"><img class="card-img-top" src="/images/2.jpg" alt=""></a>
-          <!-- <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">오정훈 아잉</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-          </div> -->
+          <div class="middle">
+            <div class="middletext">현지학기제</div>
+          </div>
+
         </div>
       </div>
-      <div class="col-lg-2 col-sm-2 portfolio-item">
+      <div class="col-lg-4 col-sm-3 portfolio-item">
         <div class="card h-100">
           <a href="#"><img class="card-img-top" src="/images/3.jpg" alt=""></a>
-          <!-- <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">김나경 만세</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-          </div> -->
+          <div class="middle">
+            <div class="middletext">Q&A</div>
+          </div>
         </div>
       </div>
-      <div class="col-lg-2 col-sm-2 portfolio-item">
+      <!-- <div class="col-lg-3 col-sm-3 portfolio-item">
         <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="/images/4.jpg" alt=""></a>
+          <a href="#"><img class="card-img-top" src="/images/4.jpg" alt=""></a> -->
           <!-- <div class="card-body">
             <h4 class="card-title">
               <a href="#">틀니 찾아 서은우</a>
             </h4>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
           </div> -->
-        </div>
-      </div>
-     <div class="col-lg-2 col-sm-2 portfolio-item">
-        <div class="card h-100"> 
+        <!-- </div>
+      </div> -->
+     <!-- <div class="col-lg-2 col-sm-2 portfolio-item">
+        <div class="card h-100">
           <a href="#">
-          <img class="card-img-top" src="/images/5.jpg" alt="">
+          <img class="card-img-top" src="/images/5.jpg" alt=""> -->
           <!-- <img class="card-img-top" src="/images/4.jpg" alt=""> -->
-          </a>
+          <!-- </a> -->
 
           <!-- <div class="card-body">
             <h4 class="card-title">
@@ -198,11 +191,11 @@
             </h4>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
           </div> -->
-        </div>
-      </div> 
-      <div class="col-lg-2 col-sm-2 portfolio-item">
+        <!-- </div>
+      </div> -->
+      <!-- <div class="col-lg-2 col-sm-2 portfolio-item">
         <div class="card h-700">
-          <a href="#"><img class="card-img-top " src="/images/6.jpg" alt=""></a>
+          <a href="#"><img class="card-img-top " src="/images/6.jpg" alt=""></a> -->
           <!-- <div class="card-body">
             <h4 class="card-title">
               <a href="#">GS 계승 박형준</a>
@@ -210,10 +203,10 @@
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
           </div> -->
         <!-- </div> -->
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
     <!-- <div class="sombra_fija"><p>Sombra Fija</p></div> -->
-    
+
     <!-- <div class="recogida_borde"><p>recogida borde</p></div> -->
     <!-- /.row -->
 
@@ -253,9 +246,10 @@
 
   </div>
   <!-- /.container -->
-  
-  
+
+<!-- <hr> -->
 </div>
+
     <!-- Footer -->
   <footer class="py-3 bg-darkblue">
     <div class="container">

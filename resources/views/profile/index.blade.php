@@ -2,8 +2,13 @@
 
 @section('content')
 <br><br>
+
 <div class="container">
-    <h3>회원 정보</h3>
+
+    <!-- <h3>회원 정보</h3> -->
+    <div class="textinfo">
+      <h3>회원 정보</h3>
+    </div>
     <div class='mid'>
                 <table class="table table-hover">
                     <thead>
@@ -18,14 +23,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>                     
+                        <tr>
                             <td>{{$user_info->id }}</a></td>
                             <td>{{$user_info->user_id}}</td>
                             <td>{{$user_info->name}}</td>
                             <td>{{$user_info->email}}</td>
                             <td>{{$user_info->phone}}</td>
                             <td>{{$user_info->birth}}</td>
-                            <td>{{$user_info->created_at}}</td>     
+                            <td>{{$user_info->created_at}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -53,7 +58,7 @@
             </tbody>
         </table>
         @if($user_questions->count())
-            <div class="text-center"> 
+            <div class="text-center">
             {{--css 가 bootstrap 에 설정되어 있고, 필요하면 가져다가 넣으면 됨.--}}
             {{--https://getbootstrap.com/docs/4.3/getting-started/introduction/--}}
             {{--public 의 app.js 를 사용하는 거임. --}}
@@ -78,32 +83,25 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->user_id}}</a></td>
                         <td>{{$user->name}}</a></td>
-                        <td><button type='button' onclick='permission({{$user->id}})'>{{$user->admin == 0?"유저":"관리자"}}</button></td>
-                        <td><button type='button' onclick='delete_user({{$user->id}})'>삭제</button></td>
+                        <td><button type='button' class="edit_human" onclick='permission({{$user->id}})'>{{$user->admin == 0?"유저":"관리자"}}</button></td>
+                        <td><button type='button' class="edit_delete" onclick='delete_user({{$user->id}})'>삭제</button></td>
                     </tr>
                     @empty
                     <p>유저가 없습니다.</p>
                 @endforelse
             </tbody>
         </table>
+
     @endif
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
-    @error('password')        
-        alert("{{$message}}");
-    @enderror
-    @error('name')        
-        alert("{{$message}}");
-    @enderror
-    
-
     $('.edit_info').on('click', function(e){
         console.log("정보 변경 가기");
         $('.user_questions').empty();
         $('.mid').load('/profile/{{$user_info->user_id}}/edit_info');
-        
+
 
     });
     $('.edit_pwd').on('click', function(e){
@@ -123,8 +121,8 @@
                 "<td>"+user.id+"</td>"+
                 "<td>"+user.user_id+"</td>"+
                 "<td>"+user.name+"</td>"+
-                "<td><button type='button' onclick='permission("+user.id+")'>"+admin_s+"</button></td>"+
-                "<td><button type='button' onclick='delete_user("+user.id+")'>삭제</button></td>"+
+                "<td><button type='button' class='edit_human' onclick='permission("+user.id+")'>"+admin_s+"</button></td>"+
+                "<td><button type='button' class='edit_delete' onclick='delete_user("+user.id+")'>삭제</button></td>"+
                 "<tr>"
         });
         $('.user_body').append(body);
@@ -146,7 +144,7 @@
                     else
                         draw_users(data);
                 },
-                error: function(data) { 
+                error: function(data) {
                     console.log("실패");
                 }
             });
@@ -169,11 +167,10 @@
                     else
                         draw_users(data);
                 },
-                error: function(data) { 
+                error: function(data) {
                     console.log("실패");
                 }
             });
     }
 </script>
 @stop
-
