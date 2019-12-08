@@ -144,26 +144,26 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="/images/1.jpg" alt=""></a>
+          <a href="/introduce"><img class="card-img-top" src="/images/1.jpg" alt=""></a>
           <div class="middle">
-            <div class="middletext">조원소개</div>
+            <a href="/introduce"><div class="middletext">조원소개</div></a>
           </div>
         </div>
       </div>
       <div class="col-lg-4 col-sm-2 portfolio-item">
         <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="/images/2.jpg" alt=""></a>
+          <a href="/intros"><img class="card-img-top" src="/images/2.jpg" alt=""></a>
           <div class="middle">
-            <div class="middletext">현지학기제</div>
+            <a href="/intros"><div class="middletext">현지학기제</div></a>
           </div>
 
         </div>
       </div>
       <div class="col-lg-4 col-sm-3 portfolio-item">
         <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="/images/3.jpg" alt=""></a>
+          <a href="/questions"><img class="card-img-top" src="/images/3.jpg" alt=""></a>
           <div class="middle">
-            <div class="middletext">Q&A</div>
+            <a href="/questions"><div class="middletext">Q&A</div></a>
           </div>
         </div>
       </div>
