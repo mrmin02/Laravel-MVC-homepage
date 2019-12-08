@@ -37,13 +37,14 @@
         return ['message'=>$weekset,'status'=>true];
     }
     # Q&A
-    function return_user_name($answers){# 데이터를 받고 , 기존 데이터에  데이터를 작성한 유저의 이름을 반환.
+    function return_user_name($answers){# 데이터를 받고 , 기존 데이터에  데이터를 작성한 유저의 이름, 관리자 여부 반환.
         
         $data = $answers;
         $count = 0;
         
         foreach($answers as $answer){
-            $data[$count]['u_name']=\App\User::find($answer->user_id)->user_id;
+            $data[$count]['u_name']=\App\User::find($answer->user_id)->name;
+            $data[$count]['u_admin']=\App\User::find($answer->user_id)->admin;
             $count ++;
         }
         return $data;

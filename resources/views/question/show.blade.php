@@ -134,7 +134,6 @@
 
             $("#answersList").empty();
             datas.map((data) => {  // {id: , user_id: , content: , created_at: , .. }
-                var csrfVar = "{{ csrf_token() }}"; // 없어도 될 듯.
                 var id = <?php if (Auth::check()){
                 print(Auth::user()->id);
                 print(';');
@@ -158,7 +157,13 @@
                     "</div>" +
                     "</form>" ;
                 }
-                $("#answersList").append("<div id='answer'" + data.id + "><h5>" + data.u_name + 
+                var admin_s = "";
+                if (data.u_admin){
+                    admin_s = "(관리자)";
+                    console.log("관리자 로딩 ");
+                }
+                console.log("관리자 들어가나?");
+                $("#answersList").append("<div id='answer'" + data.id + "><h5>" + data.u_name + admin_s+
                     "</h5><pre id='userAnswer"+data.id+"' style='height:auto;font-size:20px;'>" 
                     + data.content +"</pre>"+
                     addButton+

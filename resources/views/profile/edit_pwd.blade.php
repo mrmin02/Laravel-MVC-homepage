@@ -2,6 +2,7 @@
 {!! method_field('PUT')!!}
 {!! csrf_field() !!}
     <p>정보 변경</p>
+    <div class="change_pw">   
     <table>
         <tr>
             <td>변경할 비밀번호</td>
@@ -12,7 +13,7 @@
             <td><input type="password" name="password_confirmation" value="" required></td>
         </tr>
     </table>
-    <button type="submit" class='update'>저장</button>
     <a href="/profile" class='back'>취소</a>
-    
+    <button type="submit" class='update'>저장</button> 
+    </div>   
 </form>

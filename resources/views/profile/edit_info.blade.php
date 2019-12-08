@@ -1,16 +1,15 @@
-<div class="nice3">
-  <form id="formData" action="/profile/{{$info->user_id}}/update_info" enctype="multipart/form-data" method="post">
+<form id="formData" action="/profile/{{$info->user_id}}/update_info" enctype="multipart/form-data" method="post">
   {!! method_field('PUT')!!}
   {!! csrf_field() !!}
 
         <!-- <h3 class="edit_h3">회원 정보</h3>
         <p class = "edit_p">정보 변경</p>
         <table class ="edit_table "> -->
-
+    <p>정보 변경</p>
+   <div class="nice3">
     <div id = "edit_info_manager">
-        <!-- <h3>회원 정보</h3> -->
-        <p>정보 변경</p>
-        <table class ="edit_table">
+        <!-- <h3>회원 정보</h3> -->    
+        <table>
             <tr id="edit_name">
                 <td>이름</td>
                 <td><input type="text" name="name"value="{{$info->name}}" required autofocus></td>
@@ -28,12 +27,11 @@
                 <td><input type="date" name="birth" required  value="{{$info->birth}}" autocomplete="birth" min="1940-01-01"></td>
             </tr>
         </table>
-        <div id = "edit_info_down">
+        <div class="edit_button">
+          <a href="/profile/{{$info->user_id}}" class='back'>취소</a>
           <button type="submit" class='update' id="edit_save">저장</button>
         </div>
-        <div id='edit_cancel'>
-          <a href="/profile/{{$info->user_id}}" class='back'>취소</a>
-        </div>
+    </div>
   </div>
   </form>
 </div>

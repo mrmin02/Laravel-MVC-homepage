@@ -4,8 +4,6 @@
 <br><br>
 
 <div class="container">
-
-    <!-- <h3>회원 정보</h3> -->
     <div class="textinfo">
       <h3>회원 정보</h3>
     </div>
