@@ -13,12 +13,14 @@
         return $time;
     }
     function week_check($request,$id = -1){
-        $starttime = $request->starttime;
-        $endtime = $request->endtime;
+        $starttime = str_replace(':','',$request->starttime);
+        $endtime = str_replace(':','',$request->endtime);
+        $starttime = substr($starttime, 0, 4);
+        $endtime = substr($endtime, 0, 4);
         if($starttime > $endtime){
             return ['message'=>'시작시간이 종료시간보다 빨라야합니다.','status'=>false];
         }
-        if($starttime < "09:00" || $starttime > "18:00" || $endtime < "09:00" || $endtime > "18:00"){
+        if($starttime < 900 || $starttime > 1800 || $endtime < 900 || $endtime > 1800){
             return ['message'=>'시간은 09시부터 12시까지 가능합니다.','status'=>false];
         }
         $weekset = $request->weekset;
@@ -27,15 +29,21 @@
             $key = substr($weekset, $i,1);
             $dateData = \App\Intro::where('weekset','like', '%'.$key.'%')->Where('id', '!=' , $id)->get();
             foreach($dateData as $data){
-                $oldstart = $data->starttime;
-                $oldend = $data->endtime;
-                if($starttime == $oldstart || ($starttime > $oldstart && $starttime < $oldend) || ($starttime < $oldstart && $endtime > $oldstart) || ($starttime > $oldstart && $starttime < $oldend)) { 
-                    return ['이미 존재하는 시간표 입니다.','status'=>false];
+                $oldstart = str_replace(':','',$data->starttime);
+                $oldend = str_replace(':','',$data->endtime);
+                $oldstart = substr($data->starttime, 0, 4);
+                $oldend = substr($data->endtime, 0, 4);
+                
+                if($starttime == $oldstart || ($starttime > $oldstart && $starttime < $oldend) || ($starttime < $oldstart && $endtime > $oldstart)) { 
+                    return ['message'=>'이미 존재하는 시간표 입니다.','status'=>false];
                 }
             }
         }
         return ['message'=>$weekset,'status'=>true];
     }
+
+
+    
     # Q&A
     function return_user_name($answers){# 데이터를 받고 , 기존 데이터에  데이터를 작성한 유저의 이름, 관리자 여부 반환.
         

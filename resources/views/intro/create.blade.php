@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
     <label>요일 : </label>
-        <div class='selectBar' id='weekset'>
+        <div class='select_bar' id='weekset'>
             <button type="button" data-value="1" class='selec_off'>월요일</button>
             <button type="button" data-value="2" class='selec_off'>화요일</button>
             <button type="button" data-value="3" class='selec_off'>수요일</button>
@@ -38,6 +38,7 @@
     <div class="form-group">
         <label for="photo">사진 : </label>
         <input type="file" name="photo" id="photo">
+        <span class='img_section'></span>
     </div>
     <div class="form-group">
         @if($lv)
@@ -48,11 +49,12 @@
 </form>
 <script>
 $(document).ready(function() {
+    
     var weekset = '';
     $('.clsBtn').on('click',function(e){
         get_list({{$lv}});
     });
-    $('.selectBar > button').on('click',function(){
+    $('.select_bar > button').on('click',function(){
         var val = $(this).attr('data-value');
         if($(this).hasClass("selec_off")){
             $(this).removeClass('selec_off');
@@ -82,15 +84,18 @@ $(document).ready(function() {
                 cache: false,
                 success : function(data){
                     alert(data["message"]);
-                    if(data["status"]) get_list();
+                    if(data["status"]) get_list({{$lv}});
                 }
             });
         }
     });
+    $("#photo").change(function(){
+        readURL(this);
+    });
 });
 </script>
 <style>
-    .selectBar button { padding:15px 20px; font:bold 12px malgun gothic; }
-    .selectBar .selec_off {background:#bbbbbb; color:#444444; border:solid 2px #dddddd; }
-    .selectBar .selec_on {background:#0069d9; color:white; border:solid 2px #007bff;}
+    .select_bar button { padding:15px 20px; font:bold 12px malgun gothic; }
+    .select_bar .selec_off {background:#bbbbbb; color:#444444; border:solid 2px #dddddd; }
+    .select_bar .selec_on {background:#0069d9; color:white; border:solid 2px #007bff;}
 </style>

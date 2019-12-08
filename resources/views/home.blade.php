@@ -105,19 +105,19 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
-         <div class="carousel-item active" style="background-image: url('/images/redtree.jpg'); ">
+         <div class="carousel-item active" style="background-image: url('/images/main.jpg'); ">
           <div class="carousel-caption d-none d-md-block">
             <!-- <h3>아름다운 우리나라</h3> -->
             <!-- <p>This is a description for the first slide.</p> -->
           </div>
         </div>
-        <div class="carousel-item" style="background-image: url('/images/bubble.jpg'); ">
+        <div class="carousel-item" style="background-image: url('/images/main2.jpg'); ">
           <div class="carousel-caption d-none d-md-block">
             <!-- <h3>REDTUBE</h3> -->
             <p>This is a description for the second slide.</p>
           </div>
         </div>
-        <div class="carousel-item" style="background-image: url('/images/ocean.jpg')">
+        <div class="carousel-item" style="background-image: url('/images/main3.jpg')">
           <div class="carousel-caption d-none d-md-block">
             <!-- <h3>탈주전문 6조</h3> -->
             <p>This is a description for the third slide.</p>

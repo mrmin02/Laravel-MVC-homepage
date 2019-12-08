@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
     <label for="weekset">요일 : </label>
-        <div class='selectBar' id='weekset'>
+        <div class='select_bar' id='weekset'>
         </div>
     </div>
     <div class="form-group">
@@ -31,6 +31,7 @@
     <div class="form-group">
         <label for="photo">사진 : </label>
         <input type="file" name="photo" id="photo">
+        <span class='img_section'></span>
     </div>
     <div class='btnBlk'>
         @if($lv)
@@ -46,13 +47,14 @@
     var key = "{{$intro->weekset}}";
     for(i = 0; i<7; i++){
         var l = i + 1;
-        var option = $(`<button type="button" data-value="${l}" class='selec_on'>${weeknd[i]}</button>`);
+        var option = $(`<button type="button" data-value="${l}" class='selec_off'>${weeknd[i]}</button>`);
         if( key.indexOf(l) != -1){ // 문자열 찾기
-            option = $(`<button type="button" data-value="${l}" class='selec_off'>${weeknd[i]}</button>`);
+            option = $(`<button type="button" data-value="${l}" class='selec_on'>${weeknd[i]}</button>`);
+            weekset += l;
         }
         select.append(option);
     }
-    $('.selectBar > button').on('click',function(){
+    $('.select_bar > button').on('click',function(){
         var val = $(this).attr('data-value');
         if($(this).hasClass("selec_off")){
             $(this).removeClass('selec_off');
@@ -73,6 +75,7 @@
         var form = $('#formData')[0];
         // Create an FormData object 
         var data = new FormData(form);
+        data.append('weekset',weekset);
         data.append('_method', 'PATCH');
         if(valid_chk(data)){
             $.ajax({
@@ -89,9 +92,12 @@
             });
         }
     });
+    $("#photo").change(function(){
+        readURL(this);
+    });
 </script>
 <style>
-    .selectBar button { padding:15px 20px; font:bold 12px malgun gothic; }
-    .selectBar .selec_off {background:#bbbbbb; color:#444444; border:solid 2px #dddddd; }
-    .selectBar .selec_on {background:#0069d9; color:white; border:solid 2px #007bff;}
+    .select_bar button { padding:15px 20px; font:bold 12px malgun gothic; }
+    .select_bar .selec_off {background:#bbbbbb; color:#444444; border:solid 2px #dddddd; }
+    .select_bar .selec_on {background:#0069d9; color:white; border:solid 2px #007bff;}
 </style>

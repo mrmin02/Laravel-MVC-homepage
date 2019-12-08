@@ -50,12 +50,10 @@ class IntrosController extends Controller
         {
             return response()->json(['error'=>$validator->errors()->all()]); # error 에 에러 사항 저장해서 전송
         }
-
         # app/helper.php 에 있는 함수들  
         $request->starttime = time_check($request->starttime); # 시작시간     (시간단위)
         $request->endtime = time_check($request->endtime);     # 끝나는 시간  (시간단위)
         $weekset = week_check($request); # 시작 시간, 끝 시간 이 올바른지 체크, 기존의 시간표와 같은 것인지 체크
-
         if($weekset['status']){  # 정상적인 시간표이면 
             if ($request->hasFile('photo')) { # 사진이 있으면
                 $photo = $request->file('photo');
@@ -96,7 +94,6 @@ class IntrosController extends Controller
         $weeknd = [ '월', '화', '수', '목', '금', '토', '일' ];
         for($i = 0; $i < 7; $i++){
             # 요일이 DB 에는 숫자로 들어가 있음. -> 문자로 바꿔주기
-
             # 문자열 치환   바뀔 문자, 바꿀 문자, 대상이 되는 문자열   
             $intro->weekset = str_replace(($i+1),$weeknd[$i],$intro->weekset);
         }
@@ -172,7 +169,6 @@ class IntrosController extends Controller
         }
         
         Intro::where('id', $id)->delete(); # 삭제 
-
         return response()->json([
             'message'=>'삭제되었습니다.',
             'status'=>true
