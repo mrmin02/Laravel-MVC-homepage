@@ -4,7 +4,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
 
 
   --color1: rgba(141,249,236);
@@ -4093,6 +4093,7 @@ input[type="button"].btn-block {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  z-index: 1;
 
 }
 
@@ -10341,7 +10342,7 @@ i{
   background-clip: border-box;
   /* border: 1px solid rgba(0, 0, 0, 0.125); */
   border-radius: 0.25rem;
-  background-color: #E6E6E6;
+  background-color: #FBEFFB;
   /* border: 3px solid #D8D8D8; */
   position: relative;
   color: black;
@@ -10357,9 +10358,54 @@ i{
   color:black;
   font-family: sans-serif;
 }
+.form-group label{
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 /* i{
   position: relative;
 } */
 
+#formData{
+  /* background-color: #f0e8e8f5; */
+  text-align: center;
+  /* border-radius: 15px 15px 15px 15px; */
+  /* box-shadow: 3px 3px 3px 3px var(--gray); */
+  margin: auto;
+  width: 500px;
+  padding: 15px;
+  height: auto;
+  margin-top:20px;
+  margin-bottom: 10px;
+}
+.selectBar button { 
+  padding:15px 20px; 
+  font:bold 12px malgun gothic; 
+}
+.selectBar .selec_off {
+  background:skyblue; 
+  color:#444444; 
+  border:solid 2px #359bfa;
+  width: 100px; 
+  margin-bottom: 10px;
+}
+.selectBar .selec_on {
+  background:#0069d9; 
+  margin-bottom: 10px;
+  color:white; 
+  border:solid 2px #007bff;}
+/* i{
+  position: relative;
+} */
+.form-control{
+  /* background-color: springgreen; */
+  width: 300px;
+  text-align: center;
+  margin:auto;
+}
+.form-group title{
+  font-family: 'Courier New', Courier, monospace;
+}
 
 /*# sourceMappingURL=bootstrap.css.map */
