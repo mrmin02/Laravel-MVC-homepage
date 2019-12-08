@@ -1,11 +1,10 @@
 @extends('layouts.profile')
 
 @section('content')
-<br><br>
-
 <div class="container">
+    <!-- <h3>회원 정보</h3> -->
     <div class="textinfo">
-      <h3>회원 정보</h3>
+      <h3 style="margin-top:100px;">회원 정보</h3>
     </div>
     <div class='mid'>
                 <table class="table table-hover">
@@ -56,7 +55,7 @@
             </tbody>
         </table>
         @if($user_questions->count())
-            <div class="text-center">
+            <div class="text-center" style="display:flex; justify-content:center;">
             {{--css 가 bootstrap 에 설정되어 있고, 필요하면 가져다가 넣으면 됨.--}}
             {{--https://getbootstrap.com/docs/4.3/getting-started/introduction/--}}
             {{--public 의 app.js 를 사용하는 거임. --}}

@@ -3,9 +3,8 @@
 
 @section('content')
 
-<!-- <h2>로그인 회원가입</h2> -->
 <div class="container" id="container">
-   <div class="form-container sign-in-container"style="margin-top: 20%;">
+   <div class="form-container sign-in-container"style="margin-top: 25%;">
         <form action="{{ route('login.store') }}" method="POST">
             {!! csrf_field() !!}
             <h2>로그인</h2>
@@ -35,16 +34,18 @@
             </div>
             <div>
                 <div>
-                    <input id="login" type="submit" name="submit">
-                    <a href ="{{route('remind.create')}}">비밀번호 찾기</a>
+                    <button id="login" type="submit" name="submit">로그인</button>
                 </div>
+                    <br>
+                    <a href ="{{route('remind.create')}}">비밀번호 찾기</a>
+
             </div>
         </form>
     </div>
 <div class="container" id="container">
    <div class="form-container sign-up-container">
         <form action="{{ route('register.store') }}" method="POST">
-            {!! csrf_field() !!} 
+            {!! csrf_field() !!}
             <div class="form-group">
                 <h2>회원가입</h2>
                 <label for="id"> {{ __('ID') }} </label>
@@ -121,7 +122,8 @@
             <div class="form-group">
                 <label for="submit"></label>
                 <div class="register-submit">
-                    <input id="register" type="submit" name="submit" value="submit">
+                    <!-- <input id="register" type="submit" name="submit" value="등록"> -->
+                    <button id="register" type="submit" name="submit">등록</button>
                 </div>
             </div>
         </form>
@@ -132,16 +134,20 @@
                 <h1>회원가입</h1>
                 <p>환영합니다.</p>
                 <button class="ghost" id="signIn">로그인 하러가기</button>
+                <br>
+                <button class="ghost" id="signIn" onclick="location.href='/'">홈으로 가기</button>
             </div>
             <div class="overlay-panel overlay-right">
                 <h1>로그인</h1>
                 <p>혹시 아이디가 없으신가요??</p>
                 <button class="ghost" id="signUp">회원가입 하러 가기</button>
+                <br>
+                <button class="ghost" id="signUp" onclick="location.href='/'">홈으로 가기</button>
             </div>
       </div>
    </div>
 </div>
-<script>       
+<script>
 </script>
 </body>
 </html>

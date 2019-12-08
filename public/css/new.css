@@ -12,8 +12,9 @@ body {
    align-items: center;
    flex-direction: column;
    font-family: 'Montserrat', sans-serif;
-   height: 100vh;
-   margin: -20px 0 50px;
+   /* height: 30vh; */
+    /* border: 1px solid black; */
+   /* margin: 50px 0 50px; */
 }
 
 h1 {
@@ -21,9 +22,9 @@ h1 {
    margin: 0;
 }
 /*   --- */
-h2 { 
+h2 {
    text-align: center;
-   color: #1313aa;
+   color: blueviolet;
 }
 
 p {
@@ -57,6 +58,10 @@ button {
    text-transform: uppercase;
    transition: transform 80ms ease-in;
 }
+#register{
+  background-color: darkblue;
+  border: 1px solid darkblue;
+}
 /* label{
    background-color: green;
 } */
@@ -71,7 +76,25 @@ button:focus {
 button.ghost {
    background-color: transparent;
    border-color: #FFFFFF;
+   width: 210px;
 }
+button.ghost2 {
+   background-color: transparent;
+   border-color: #FFFFFF;
+   width: 210px;
+
+}
+button.ghost3 {
+   background-color: transparent;
+   border-color: #FFFFFF;
+   width: 210px;
+}
+button.ghost4 {
+   background-color: transparent;
+   border-color: #FFFFFF;
+   width: 210px;
+}
+
 
 form {
    background-color: #FFFFFF;
@@ -83,6 +106,11 @@ form {
    padding: 0 50px;
    height: 100%;
    text-align: center;
+
+}
+.form__auth{
+   padding-bottom: 10px;
+   box-shadow: 3px 3px 3px 3px gray;
 }
 
 input {
@@ -114,7 +142,7 @@ input {
    transition: all 0.6s ease-in-out;
 }
 /* 수정해 보기 */
-.sign-in-container { 
+.sign-in-container {
    left: 0;
    width: 50%;
    height: auto;
@@ -167,9 +195,10 @@ input {
 }
 /* #FF416C */
 .overlay {
-   background: #FF416C; 
-   background: -webkit-linear-gradient(to right, #FF416C, #FFFFFF);
-   background: linear-gradient(to left, #FF416C,rgb(255, 148, 173));
+   background: #FF416C;
+   /* background: -webkit-linear-gradient(to right, #FF416C, #FFFFFF); */
+   background: linear-gradient(to left, red,white,darkblue);
+   /* background:linear-gradient(to left, blue, darkblue); */
    background-repeat: no-repeat;
    background-size: cover;
    background-position: 0 0;

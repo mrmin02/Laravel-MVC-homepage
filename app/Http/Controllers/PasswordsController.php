@@ -60,7 +60,7 @@ class PasswordsController extends Controller
 
         \DB::table('password_resets')->whereToken($token)->delete();
 
-        flash('비밀번호 바꿈');
+        flash('비밀번호 변경 완료');
         
         return redirect()->route('login.index');   
         // 비밀번호를 바꾸고 난 다음 보여지는 화면에서 

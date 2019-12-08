@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>질문 수정</h1>
+        <h1 style="margin-top:100px;">질문 수정</h1>
         <hr/>
 
     <form action="/questions/{{$question->id}}" method="post">

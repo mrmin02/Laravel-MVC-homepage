@@ -2,7 +2,10 @@
 
 @section('content')
 <!-- <img src="{{ asset('pic/winter_14-wallpaper-1920x1080.jpg') }}" width=100% height="500px" alt="Responsive image"> -->
-<br/>
+<img src="{{asset('images/qna.jpg')}}" class="img-fluid" alt="그림없음">
+<div class="qnacontainer"style="display:flex; justify-content:center;">
+<button class="btn btn-secondary" type="button" onclick="location.href='{{route('questions.create')}}'">작성하기</button>
+</div>
 <div class="container">
                     <table class="table table-hover">
                         <thead>
@@ -28,7 +31,7 @@
                     @endforelse
                     </table>
     @if($questions->count())
-        <div class="text-center"> 
+        <div class="text-center" style="display:flex; justify-content:center;"> 
         {{--css 가 bootstrap 에 설정되어 있고, 필요하면 가져다가 넣으면 됨.--}}
         {{--https://getbootstrap.com/docs/4.3/getting-started/introduction/--}}
         {{--public 의 app.js 를 사용하는 거임. --}}
@@ -36,7 +39,6 @@
             {{--XSS 방지 기능 무력화 , 보호기능 끄기: htmlspecialchars 이거 안하기==> render 로 테그를 만드는데 뭐 마음대로 바뀌니까.--}}
         </div>
     @endif
-    <div> <a href="/questions/create" style="background-color:#2E9AFE;color:white;padding:10px;border-radius:15px;font-size:20px;">작성</a></div>
 </div>
 
 @stop

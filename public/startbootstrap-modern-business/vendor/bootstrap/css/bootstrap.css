@@ -4712,6 +4712,7 @@ input[type="button"].btn-block {
 .card-img-overlay {
   position: absolute;
   top: 0;
+
   right: 0;
   bottom: 0;
   left: 0;
@@ -6338,6 +6339,7 @@ a.close.disabled {
   display: none;
   float: left;
   width: 100%;
+
   margin-right: -100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -10326,6 +10328,34 @@ i{
 .dropdown-item1 a{
   text-align: center;
   color: black;
+}
+.card_user{
+  position: relative;
+  display: -ms-flexbox;
+  display: inline-block;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  /* background-color: yellow; */
+  background-clip: border-box;
+  /* border: 1px solid rgba(0, 0, 0, 0.125); */
+  border-radius: 0.25rem;
+  background-color: #E6E6E6;
+  /* border: 3px solid #D8D8D8; */
+  position: relative;
+  color: black;
+  height: auto;
+  box-shadow: 3px 3px 3px 3px gray;
+}
+.card-img1{
+  text-align: center;
+  height: 200px;
+
+}
+.text-mypick{
+  color:black;
+  font-family: sans-serif;
 }
 /* i{
   position: relative;

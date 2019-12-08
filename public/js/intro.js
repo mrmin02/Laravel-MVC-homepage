@@ -70,3 +70,22 @@ function valid_chk(data){
     if(err !== 0) alert(txt);
     return (err === 0) ? true : false;
 }
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {      
+            $('.img_section').html('');
+            var i = imageResize(e.target.result);
+            $('.img_section').append(i);
+            
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function imageResize(img_src){
+    var i = new Image(); 
+    i.src = img_src;
+    if(i.width > i.height) i.width = 200;
+    else i.height = 200;
+    return i;
+}

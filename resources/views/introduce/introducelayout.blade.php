@@ -16,9 +16,9 @@
   <link href="{{asset('startbootstrap-modern-business/vendor/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
   <!-- Custom styles for this template -->
   <!-- 아이콘 이미지 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="{{asset('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')}}">
+  <script type="text/javascript" src="{{asset('https://code.jquery.com/jquery-3.1.1.min.js')}}"></script>
+  <script src="{{asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js')}}"></script>
   <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> -->
   <style>
   /* 폼 태크 */
@@ -32,7 +32,7 @@
         border-radius:5px;
         color:#8A0808;
     }
-    .print-error-msg li{ 
+    .print-error-msg li{
         padding-top: 10px;
     }
 /* 사용자인증 */
@@ -44,7 +44,7 @@
     .authenticate h3{
         padding-top: 10px;
         FONT-SIZE: 22px;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         COLOR: #2E86B9;
         PADDING-BOTTOM: 5px;
         font-weight:bold;
@@ -59,7 +59,7 @@
 /* 생성하기 */
     .create p{
         margin: 0px;
-        margin-top: 10px;   
+        margin-top: 10px;
     }
 /* 수정하기 */
     .edit p{
@@ -72,7 +72,7 @@
         max-width: 100%;
         margin-top: 10px;
         margin-bottom: 10px;
-      
+
     }
     .img_wrap p{
         margin-top : 10px;
@@ -91,12 +91,14 @@
         text-align:center;
         border:1px solid #F2F2F2;
         border-radius:5px;
+        font-weight:normal;
+        font-size:10px;
     }
     .change_img img{
         display: inline-block;
     }
-    
-   
+
+
 /* 나경이누나가 한거 주로 hover effect */
     .main{
         display:flex;
@@ -184,13 +186,42 @@
         -webkit-transform: translate3d(0,0,0);
         transform: translate3d(0,0,0);
       }
+       /** body & html */
+       * {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        }
+      html, body{
+        height: 100%;
+      }
+      body{
+        margin-top: 70px;
+      }
+      .main-content{
+        min-height: 100%;
+        margin-top: 70px;
+        position: relative;
+        padding-bottom: 56px;
+      }
+      .usershokai{
+        text-align:center;
+        color:black;
+        margin-bottom: 30px;
+      }
+      footer{
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
   </style>
 </head>
 
 <body>
 
   <!-- Navigation -->
-  
+
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-darkblue fixed-top">
   <a class="navbar-brand" href="{{url('/')}}">YORIYOI</a>
     <div class="container">
@@ -226,11 +257,11 @@
               <!-- <a class="dropdown-item" href="http://yjp.ac.kr">영진</a> -->
             </div>
             @endauth
-          </li>  
+          </li>
         </ul>
       </div>
     </div>
-     
+
                     @auth
                       <!-- 드롭다운으로 할것-->
                       <!-- <div class="namep">
@@ -243,14 +274,14 @@
                           <div class="form-group1">
                             <!-- <button type="submit" class="btn btn-primary1">삭제</button> -->
                             <button type="submit" class="btn btn-primary1">logout</button>
-                          
+
                           </div>
                         </form>
                     @else
                     <!-- <div class="Login"> -->
-                    <div class="form-group1">  
+                    <div class="form-group1">
                       <div class="btn btn-primary1">
-                        
+
                         <a href="{{ route('login.index') }}">Login</a>
                         @if (Route::has('register'))
                             <a href="{{ route('register.index') }}">Register</a>
@@ -258,14 +289,23 @@
                     @endauth
                       </div>
                     </div>
-                
+
         </div>
   </nav>
 <body>
+  <div class="main-content">
     @yield('content')
     @yield('script')
-    <!-- Bootstrap core JavaScript -->
-    <script src="{{asset('startbootstrap-modern-business/vendor/jquery/jquery.min.js')}}"></script>
+  </div>
+    <footer class="py-3 bg-darkblue">
+      <div class="container">
+        <p class="m-0 text-center text-white font-weight-bold">Copyright &copy; YORIYOI @ 2WDJ Final Test </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+     <!-- Bootstrap core JavaScript -->
+     <script src="{{asset('startbootstrap-modern-business/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('startbootstrap-modern-business/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 </body>
+
 </html>

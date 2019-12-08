@@ -10,13 +10,13 @@
     <link href="{{asset('css/new.css')}}" rel="stylesheet">
 </head>
 <body>
-  
-<div class="container" id="container">    
+<!-- <h2> 회원소개</h2>   -->
+<!-- <div class="container" id="container"> -->
     @include('flash::message')
     <!-- <div class="container" id="container"> -->
              @yield('content')
 <!-- <div class="container" id="container"> -->
-       
+
     <script>
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');

@@ -18,14 +18,45 @@
   <!-- Custom styles for this template -->
   <link href="{{ asset('startbootstrap-modern-business/css/modern-business.css') }}" rel="stylesheet">
   <link href="{{ asset('startbootstrap-modern-business/css/edit.css') }}" rel="stylesheet">
+
+  <!-- intros jquery -->
+  <script src="{{asset('https://code.jquery.com/jquery-1.12.4.js')}}"></script>
+  <script src="{{asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js')}}"></script>
+
   <style>
     .buttonadjustment{
       display:flex;
       flex-direction: row;
     }
-    h3{
+    h1, h3{
       color: black;
     }
+     /** body & html */
+     * {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        }
+      html, body{
+        height: 100%;
+      }
+      body{
+        padding-top: 0px;
+        margin-top: 70px;
+        
+      }
+      .main-content{
+        min-height: 100%;
+        position: relative;
+        padding-bottom: 56px;
+      }
+      footer{
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      
   </style>
 </head>
 
@@ -104,8 +135,16 @@
         </div>
   </nav>
 <body>
+    <div class="main-content">
     @yield('content')
+    </div>
     @yield('script')
+    <footer class="py-3 bg-darkblue">
+      <div class="container">
+        <p class="m-0 text-center text-white font-weight-bold">Copyright &copy; YORIYOI @ 2WDJ Final Test </p>
+      </div>
+      <!-- /.container -->
+    </footer>
     <!-- Bootstrap core JavaScript -->
     <script src="{{asset('startbootstrap-modern-business/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('startbootstrap-modern-business/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

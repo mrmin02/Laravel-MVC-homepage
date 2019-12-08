@@ -71,47 +71,26 @@
 
 }
 .edit_table td{
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+  padding-right: 20px;
 }
-#edit_name{
-  border: 1px solid blue;
 
-}
-#edit_email{
-  border: 1px solid skyblue;
-}
-#edit_phonenumber{
-  border: 1px solid blue;
-}
-#edit_birth{
-  border: 1px solid blue;
-}
-#edit_info_manager{
-  background-color: yellow;
-  margin: 15px;
-  /* margin-left: 450px; */
-  border: 4px solid white;
-  border-radius: 7px;
-  height: 500px;
-  box-shadow: 4px;
-  /* padding: 30px; */
-  /* width: 400px; */
-  /* text-align: center; */
-}
 #edit_info_manager h3{
   text-align: center;
 }
+
+#edit_info_manager td{
+    padding-left: 10px;   
+    padding-right: 10px;
+    font-weight: bold;   
+}
+
 #edit_info_manager p{
   text-align: center;;
 }
 
-#edit_save{
-  border: 3px solid violet;
-  width: 150px;
-  height: 30px;
-  font-weight: bold;
-}
 #edit_info_down{
+  flex-direction:row;
   text-align: center;
 }
 #edit_info_down button{
@@ -131,6 +110,13 @@
   width:25%;
   text-align: center;
 }
+
+.edit_button button,a{
+  margin-right: 10px;
+  margin-top: 10px;
+
+}
+
 #edit_cancel a{
   text-align: center;
 }
@@ -139,11 +125,32 @@
   width:auto;
 }
 .nice3{
-  /* padding: 100px; */
-  border: 1px solid pink;
-  background: yellowgreen;
-  margin-left:25%;
-  width: 600px;
-  height: 580px;
-  font-size: 30px;
+    background-color: #CEECF5;
+    border:2px solid #bee5eb;
+    border-radius:5px;
+    padding-left: 10px;
+    display: inline-block;
+    padding: 10px;
+
+  }
+
+.change_pw{
+    background-color: #CEECF5;
+    border:2px solid #bee5eb;
+    border-radius:5px;
+    padding-left: 10px;
+    display: inline-block;
+    padding: 10px;
+  }
+.change_pw tr{
+    font-weight: bold;
 }
+
+.chocie_btn{
+   
+}
+.change_pw button,a{    
+    margin-top: 10px;
+}
+
+

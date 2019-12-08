@@ -13,7 +13,9 @@
             <td><input type="password" name="password_confirmation" value="" required></td>
         </tr>
     </table>
-    <a href="/profile" class='back'>취소</a>
+    <div class="choice_btn"  style="text-align:center">
     <button type="submit" class='update'>저장</button> 
+    <a href="/profile" class='back'>취소</a>
+    </div>
     </div>   
 </form>

@@ -27,9 +27,9 @@
                 <td><input type="date" name="birth" required  value="{{$info->birth}}" autocomplete="birth" min="1940-01-01"></td>
             </tr>
         </table>
-        <div class="edit_button">
-          <a href="/profile/{{$info->user_id}}" class='back'>취소</a>
+        <div class="edit_button" style="text-align:center">
           <button type="submit" class='update' id="edit_save">저장</button>
+          <a href="/profile/{{$info->user_id}}" class='back'>취소</a>
         </div>
     </div>
   </div>

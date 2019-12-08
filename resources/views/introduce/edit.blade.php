@@ -1,5 +1,6 @@
 <form id="formData" enctype="multipart/form-data" >
  {!! csrf_field() !!}
+ <!-- {!! method_field('PUT')!!} -->
     <div class="print-error-msg" style="display:none">
         <ul></ul>
     </div>
@@ -20,7 +21,7 @@
                 <input type="file" name="photo" id="photo" value="{{ old('photo',$member->photo )}}"></br>
                 <div class = "change_img">   
                     <!-- 미리보기 출력 -->
-                    <p>최근 선택한 이미지</p>
+                    <p><최근 선택한 이미지></p>
                     <img id ="nowPhoto" />
                 </div>
             </div>

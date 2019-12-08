@@ -16,7 +16,7 @@
             <p>사진</p> 
             <input type="file" name="photo" id="photo">
             <!-- 미리보기 출력 -->
-            <p>최근 선택한 이미지</p>  
+            <p><최근 선택한 이미지></p>  
             <img id ="nowPhoto"/>
         </div>
     </div>
