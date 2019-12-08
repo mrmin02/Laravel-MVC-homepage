@@ -31,8 +31,8 @@
             foreach($dateData as $data){
                 $oldstart = str_replace(':','',$data->starttime);
                 $oldend = str_replace(':','',$data->endtime);
-                $oldstart = substr($data->starttime, 0, 4);
-                $oldend = substr($data->endtime, 0, 4);
+                $oldstart = substr($oldstart, 0, 4);
+                $oldend = substr($oldend, 0, 4);
                 
                 if($starttime == $oldstart || ($starttime > $oldstart && $starttime < $oldend) || ($starttime < $oldstart && $endtime > $oldstart)) { 
                     return ['message'=>'이미 존재하는 시간표 입니다.','status'=>false];
