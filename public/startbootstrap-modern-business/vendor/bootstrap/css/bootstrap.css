@@ -4,7 +4,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
 
 
   --color1: rgba(141,249,236);
@@ -10360,6 +10360,58 @@ i{
 /* i{
   position: relative;
 } */
+.page{
+  margin-top: 6%;
+ 
+}
+.form-group label{
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+/* i{
+  position: relative;
+} */
+
+#formData2{
+  /* background-color: #f0e8e8f5; */
+  text-align: center;
+  /* border-radius: 15px 15px 15px 15px; */
+  /* box-shadow: 3px 3px 3px 3px var(--gray); */
+  margin: auto;
+  /* width: 500px; */
+  /* padding: 15px; */
+  height: auto;
+  margin-bottom: 10px;
+}
+.selectBar button { 
+  padding:15px 20px; 
+  font:bold 12px malgun gothic; 
+}
+.selectBar .selec_off {
+  background:skyblue; 
+  color:#444444; 
+  border:solid 2px #359bfa;
+  width: 100px; 
+  margin-bottom: 10px;
+}
+.selectBar .selec_on {
+  background:#0069d9; 
+  margin-bottom: 10px;
+  color:white; 
+  border:solid 2px #007bff;}
+/* i{
+  position: relative;
+} */
+.page .form-control{
+ 
+  width: 300px;
+  text-align: center;
+  margin:auto;
+}
+.form-group title{
+  font-family: 'Courier New', Courier, monospace;
+}
 
 
 /*# sourceMappingURL=bootstrap.css.map */

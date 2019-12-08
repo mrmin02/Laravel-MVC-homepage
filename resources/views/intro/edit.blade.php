@@ -1,4 +1,4 @@
-<form id="formData" enctype="multipart/form-data">
+<form id="formData2" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label for="title">제목 : </label>
@@ -72,7 +72,7 @@
     $('.modBtn').on('click',function(e){
         e.preventDefault();
         // Get form
-        var form = $('#formData')[0];
+        var form = $('#formData2')[0];
         // Create an FormData object 
         var data = new FormData(form);
         data.append('weekset',weekset);
