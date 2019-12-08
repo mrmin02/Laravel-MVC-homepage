@@ -85,7 +85,7 @@
                 var modal_str = `<div class="overlay creBtn" `;
                 if({{$lv}}) modal_str += ` data-toggle="modal" data-target="#exampleModalLong"`;
                 var img_script = $(modal_str + '>');
-                var script_content = $(`<h2>team 3</h2>`);
+                var script_content = $(`<p>team 3</p>`);
                 var script_content1 = $(`<p>${board.name}<p>`);
                 if({{$lv}}){
                     img_script.bind('click' , function(e) {
